@@ -51,6 +51,14 @@
     lat = 0, onMouseDownLat = 0,
     phi = 0, theta = 0;
 
+  const panoramas = [
+    'assets/images/entrance.jpg',
+    'assets/images/kitchen.jpg',
+    'assets/images/bedroom.jpg',
+    'assets/images/bathroom.jpg',
+  ];
+  let panoramaIndex = 0;
+
   init();
   animate();
 
@@ -70,7 +78,7 @@
     geometry.scale(-1, 1, 1);
 
     var material = new THREE.MeshBasicMaterial({
-      map: new THREE.TextureLoader().load('assets/images/bathroom.jpg')
+      map: new THREE.TextureLoader().load(panoramas[panoramaIndex])
     });
 
     mesh = new THREE.Mesh(geometry, material);
@@ -129,6 +137,11 @@
       document.body.style.opacity = 1;
 
     }, false);
+
+    document.onkeyup = function(event){
+      panoramaIndex = (panoramaIndex + 1) % panoramas.length
+      material.map = THREE.ImageUtils.loadTexture(panoramas[panoramaIndex])
+    }
 
     //
 
