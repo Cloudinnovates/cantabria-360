@@ -72,14 +72,11 @@
 
     var texture = new THREE.TextureLoader().load( 'assets/images/crate.gif' );
 
-    var geometry = new THREE.BoxBufferGeometry( 50, 50, 5 );
-    var material = new THREE.MeshBasicMaterial( { map: texture } );
-
-    let mesh = new THREE.Mesh( geometry, material );
-    mesh.position.x = 175;
-    mesh.position.z = -300;
-
-    scene.add( mesh );
+    const crateMaterial = new THREE.SpriteMaterial({ map: texture });
+    const crateSprite = new THREE.Sprite(crateMaterial);
+    crateSprite.position.set(175, 0, -300);
+    crateSprite.scale.set(50, 50, 1.0);
+    scene.add(crateSprite);
 
 
     // add some text
