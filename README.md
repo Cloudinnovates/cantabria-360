@@ -10,3 +10,4 @@ Estudiar cómo se pueden mostrar fotos 360º en la web
 - [A panoramic experiment with 3js](https://norikdavtian.github.io/ThreeJS-360-Panorama/)
 - [How to export 3js... on S.O.](https://stackoverflow.com/questions/29048161/how-to-export-a-three-js-scene-into-a-360-texture-for-photosphere)
 - [Photo spheres with 3js](http://blog.mastermaps.com/2014/01/photo-spheres-with-threejs.html)
+- [Muchos ejemplos básicos](http://stemkoski.github.io/Three.js/)
