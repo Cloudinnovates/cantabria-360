@@ -20,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/rchavarria/cantabria-360/issues"
   },
-  "homepage": "https://github.com/rchavarria/cantabria-360#readme"
+  "homepage": "https://github.com/rchavarria/cantabria-360#readme",
+  "dependencies": {
+    "three": "^0.102.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.29.6"
+  }
 }
