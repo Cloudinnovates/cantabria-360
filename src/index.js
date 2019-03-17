@@ -1,4 +1,4 @@
-import THREE from 'three';
+import {Scene} from 'three';
 
-const scene = new THREE.Scene();
+const scene = new Scene();
 console.log(scene);
