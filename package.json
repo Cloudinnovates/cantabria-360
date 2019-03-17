@@ -1,0 +1,35 @@
+{
+  "name": "cantabria-360",
+  "version": "1.0.0",
+  "description": "360º panorama tours for MyCantabria",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "webpack",
+    "build:prod": "webpack --mode=production",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rchavarria/cantabria-360.git"
+  },
+  "keywords": [
+    "panorama",
+    "360",
+    "tour"
+  ],
+  "author": "Rubén Chavarría",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rchavarria/cantabria-360/issues"
+  },
+  "homepage": "https://github.com/rchavarria/cantabria-360#readme",
+  "dependencies": {
+    "three": "^0.102.1"
+  },
+  "devDependencies": {
+    "path": "^0.12.7",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  }
+}

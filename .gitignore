@@ -1,6 +1,9 @@
 # PhpStorm
 .idea
 
+# webpack dist folder
+dist
+
 # Logs
 logs
 *.log
