@@ -76,12 +76,14 @@
     const crateSprite = new THREE.Sprite(crateMaterial);
     crateSprite.position.set(175, 0, -300);
     crateSprite.scale.set(50, 50, 1.0);
+    crateSprite.name = 'crate-sprite';
     scene.add(crateSprite);
 
 
     // add some text
     const textSprite = makeTextSprite(' Por aquí se va ');
     textSprite.position.set(200, 15, -300);
+    textSprite.name = 'text-sprite';
     scene.add(textSprite);
   }
 
@@ -106,6 +108,7 @@
     });
 
     mesh = new THREE.Mesh(geometry, material);
+    mesh.name = 'panorama';
 
     scene.add(mesh);
 
@@ -268,17 +271,29 @@
   }
 
   function onPointerMove(event) {
-
     if (isUserInteracting === true) {
-
       var clientX = event.clientX || event.touches[0].clientX;
       var clientY = event.clientY || event.touches[0].clientY;
 
       lon = (onMouseDownMouseX - clientX) * 0.1 + onMouseDownLon;
       lat = (clientY - onMouseDownMouseY) * 0.1 + onMouseDownLat;
-
     }
 
+    // detect intersections
+    const mouseX = ( event.clientX / window.innerWidth ) * 2 - 1;
+    const mouseY = -( event.clientY / window.innerHeight ) * 2 + 1;
+
+    var vector = new THREE.Vector3( mouseX, mouseY, 1 );
+    vector.unproject(camera );
+    var ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+    // create an array containing all objects in the scene with which the ray intersects
+    var intersects = ray.intersectObjects( scene.children );
+
+    for(var i = 0; i < intersects.length; i++) {
+      if (intersects[i].object.name === 'crate-sprite') {
+        console.log('Detected');
+      }
+    }
   }
 
   function onPointerUp() {
