@@ -1,39 +1,28 @@
 import { Sprite, SpriteMaterial, Texture, TextureLoader } from 'three'
 
-function makeTextSprite (message, parameters = {}) {
-  const fontface = parameters.hasOwnProperty('fontface')
-    ? parameters['fontface'] : 'Arial'
-
-  const fontsize = parameters.hasOwnProperty('fontsize')
-    ? parameters['fontsize'] : 18
-
-  const borderThickness = parameters.hasOwnProperty('borderThickness')
-    ? parameters['borderThickness'] : 4
-
-  const borderColor = parameters.hasOwnProperty('borderColor')
-    ? parameters['borderColor'] : { r: 0, g: 0, b: 0, a: 1.0 }
-
-  const backgroundColor = parameters.hasOwnProperty('backgroundColor')
-    ? parameters['backgroundColor'] : { r: 255, g: 255, b: 255, a: 1.0 }
-
+function makeTextSprite (message, parameters = {
+  fontface: 'Arial',
+  fontsize: 18,
+  borderThickness: 4,
+  borderColor: { r: 0, g: 0, b: 0, a: 1.0 },
+  backgroundColor: { r: 255, g: 255, b: 255, a: 1.0 }
+}) {
+  const { fontface, fontsize, borderThickness, borderColor, backgroundColor } = parameters
   const canvas = document.createElement('canvas')
   const context = canvas.getContext('2d')
   context.font = 'Bold ' + fontsize + 'px ' + fontface
 
   // get size data (height depends only on font size)
-  const metrics = context.measureText(message)
-  const textWidth = metrics.width
+  const textWidth = context.measureText(message).width
 
   // background color
-  context.fillStyle = 'rgba(' + backgroundColor.r + ',' + backgroundColor.g + ',' +
-    backgroundColor.b + ',' + backgroundColor.a + ')'
+  context.fillStyle = toRGBA(backgroundColor)
   // border color
-  context.strokeStyle = 'rgba(' + borderColor.r + ',' + borderColor.g + ',' +
-    borderColor.b + ',' + borderColor.a + ')'
+  context.strokeStyle = toRGBA(borderColor)
   context.lineWidth = borderThickness
 
   // 1.4 is extra height factor for text below baseline: g,j,p,q.
-  roundRect(context, borderThickness / 2, borderThickness / 2, textWidth + borderThickness, fontsize * 1.4 + borderThickness, 6)
+  drawRoundedRectangle(context, borderThickness / 2, borderThickness / 2, textWidth + borderThickness, fontsize * 1.4 + borderThickness, 6)
 
   // text color
   context.fillStyle = 'rgba(0, 0, 0, 1.0)'
@@ -42,16 +31,18 @@ function makeTextSprite (message, parameters = {}) {
   // canvas contents will be used for a texture
   const texture = new Texture(canvas)
   texture.needsUpdate = true
-
-  const spriteMaterial = new SpriteMaterial({ map: texture })
-  const sprite = new Sprite(spriteMaterial)
-  sprite.scale.set(100, 50, 1.0)
+  const sprite = new Sprite(new SpriteMaterial({ map: texture }))
+  sprite.scale.set(textWidth, fontsize * 3, 1.0)
 
   return sprite
 }
 
-// function for drawing rounded rectangles
-function roundRect (ctx, x, y, w, h, r) {
+function toRGBA (color) {
+  const { r, g, b, a } = color
+  return `rgba(${r}, ${g}, ${b}, ${a})`
+}
+
+function drawRoundedRectangle (ctx, x, y, w, h, r) {
   ctx.beginPath()
   ctx.moveTo(x + r, y)
   ctx.lineTo(x + w - r, y)
@@ -68,18 +59,19 @@ function roundRect (ctx, x, y, w, h, r) {
 }
 
 export default class GateMesh {
-  create (scene) {
+  create (scene, position, message) {
+    const { x, y, z } = position
     // square with some texture
     const texture = new TextureLoader().load('assets/images/crate.gif')
     const crateMaterial = new SpriteMaterial({ map: texture })
     const sprite = new Sprite(crateMaterial)
-    sprite.position.set(175, 0, -300)
+    sprite.position.set(x, y, z)
     sprite.scale.set(50, 50, 1.0)
     sprite.name = 'crate-sprite'
 
     // add some text
-    const text = makeTextSprite(' Abre la puerta ')
-    text.position.set(200, 15, -300)
+    const text = makeTextSprite(` ${message} `)
+    text.position.set(x, y, z)
     text.name = 'text-sprite'
 
     scene.add(sprite)

@@ -9,14 +9,11 @@ import {
   Raycaster,
   Scene,
   SphereBufferGeometry,
-  Sprite,
-  SpriteMaterial,
-  Texture,
   TextureLoader,
   Vector3,
   WebGLRenderer
 } from 'three'
-import GateMesh from "./gate-mesh"
+import GateMesh from './gate-mesh'
 
 var camera, scene, renderer
 
@@ -48,7 +45,7 @@ function initCube () {
 
   scene = new Scene()
   const gateMesh = new GateMesh()
-  gateMesh.create(scene)
+  gateMesh.create(scene, new Vector3(175, 0, -300), 'Habitación')
 }
 
 function init () {
