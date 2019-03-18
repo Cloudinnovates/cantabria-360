@@ -14,8 +14,16 @@ import {
   WebGLRenderer
 } from 'three'
 import GateMesh from './gate-mesh'
+import PanoramaMesh from "./panorama-mesh"
 
-var camera, scene, renderer
+
+const scene = new Scene()
+const camera = new PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000)
+camera.target = new Vector3(0, 0, 0)
+const renderer = new WebGLRenderer()
+renderer.setPixelRatio(window.devicePixelRatio)
+renderer.setSize(window.innerWidth, window.innerHeight)
+
 
 var isUserInteracting = false
 
@@ -40,41 +48,15 @@ init()
 animate()
 
 function initCube () {
-  camera = new PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000)
-  // camera.position.z = 400;
-
-  scene = new Scene()
   const gateMesh = new GateMesh()
   gateMesh.create(scene, new Vector3(175, 0, -300), 'Habitación')
 }
 
 function init () {
-  var container, mesh
+  const panorama = new PanoramaMesh()
+  panorama.create(scene, panoramas[panoramaIndex])
 
-  container = document.getElementById('container')
-
-  // camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1100);
-  camera.target = new Vector3(0, 0, 0)
-
-  // scene = new Scene();
-
-  var geometry = new SphereBufferGeometry(500, 60, 40)
-  // var geometry = new SphereBufferGeometry(5000, 600, 400);
-  // invert the geometry on the x-axis so that all of the faces point inward
-  geometry.scale(-1, 1, 1)
-
-  var material = new MeshBasicMaterial({
-    map: new TextureLoader().load(panoramas[panoramaIndex])
-  })
-
-  mesh = new Mesh(geometry, material)
-  mesh.name = 'panorama'
-
-  scene.add(mesh)
-
-  renderer = new WebGLRenderer()
-  renderer.setPixelRatio(window.devicePixelRatio)
-  renderer.setSize(window.innerWidth, window.innerHeight)
+  const container = document.getElementById('container')
   container.appendChild(renderer.domElement)
 
   document.addEventListener('mousedown', onPointerStart, false)
@@ -105,10 +87,9 @@ function init () {
   document.addEventListener('drop', function (event) {
     event.preventDefault()
 
-    var reader = new FileReader()
+    const reader = new FileReader()
     reader.addEventListener('load', function (event) {
-      material.map.image.src = event.target.result
-      material.map.needsUpdate = true
+      panorama.update(event.target.result)
     }, false)
     reader.readAsDataURL(event.dataTransfer.files[0])
 
@@ -117,7 +98,7 @@ function init () {
 
   document.onkeyup = function (event) {
     panoramaIndex = (panoramaIndex + 1) % panoramas.length
-    material.map = ImageUtils.loadTexture(panoramas[panoramaIndex])
+    panorama.update(panoramas[panoramaIndex])
   }
 
   //
@@ -202,11 +183,6 @@ function update () {
   camera.target.z = 500 * Math.sin(phi) * Math.sin(theta)
 
   camera.lookAt(camera.target)
-
-  /*
-  // distortion
-  camera.position.copy( camera.target ).negate();
-  */
 
   renderer.render(scene, camera)
 }
