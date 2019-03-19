@@ -1,5 +1,6 @@
 import GateModel from '../model/gate-model'
 import { Vector3 } from 'three'
+import RoomModel from "../model/room-model"
 
 const bedroomGate = new GateModel({
   id: 'from-entrance-to-bedroom',
@@ -25,4 +26,9 @@ const gates = [
   bathroomGate
 ]
 
-export { gates, bedroomGate }
+const entranceRoom = new RoomModel({
+  id: 'entrance',
+  gates: gates
+})
+
+export { entranceRoom }
