@@ -59,20 +59,20 @@ function drawRoundedRectangle (ctx, x, y, w, h, r) {
 }
 
 export default class GateMesh {
-  create (scene, position, message) {
-    const { x, y, z } = position
+  create (scene, gate) {
+    const { x, y, z } = gate.position
     // square with some texture
     const texture = new TextureLoader().load('assets/images/crate.gif')
     const crateMaterial = new SpriteMaterial({ map: texture })
     const sprite = new Sprite(crateMaterial)
     sprite.position.set(x, y, z)
     sprite.scale.set(50, 50, 1.0)
-    sprite.name = 'crate-sprite'
+    sprite.name = `img-${gate.id}`
 
     // add some text
-    const text = makeTextSprite(` ${message} `)
+    const text = makeTextSprite(` ${gate.label} `)
     text.position.set(x, y, z)
-    text.name = 'text-sprite'
+    text.name = `text-${gate.id}`
 
     scene.add(sprite)
     scene.add(text)
