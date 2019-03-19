@@ -10,8 +10,9 @@ import {
 } from 'three'
 import GateMesh from './gate-mesh'
 import PanoramaMesh from './panorama-mesh'
-import { entranceRoom } from './data/tours'
+import { firstTour } from './data/tours'
 
+let currentTour = firstTour
 const scene = new Scene()
 const camera = new PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000)
 camera.target = new Vector3(0, 0, 0)
@@ -43,7 +44,8 @@ animate()
 
 function initCube () {
   const gateMesh = new GateMesh()
-  entranceRoom.gates.forEach(gate => gateMesh.create(scene, gate))
+  const startingRoom = currentTour.startingRoom()
+  startingRoom.gates.forEach(gate => gateMesh.create(scene, gate))
 }
 
 function init () {
