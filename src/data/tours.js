@@ -26,6 +26,7 @@ const bathroomGate = new GateModel({
 
 const entranceRoom = new RoomModel({
   id: 'entrance',
+  panorama: 'assets/images/entrance.jpg',
   gates: [
     bedroomGate,
     kitchenGate,
@@ -35,16 +36,19 @@ const entranceRoom = new RoomModel({
 
 const bedroomRoom = new RoomModel({
   id: 'bedroom',
+  panorama: 'assets/images/bedroom.jpg',
   gates: []
 })
 
 const kitchenRoom = new RoomModel({
   id: 'kitchen',
+  panorama: 'assets/images/kitchen.jpg',
   gates: []
 })
 
 const bathroomRoom = new RoomModel({
   id: 'bathroom',
+  panorama: 'assets/images/bathroom.jpg',
   gates: []
 })
 

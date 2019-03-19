@@ -13,4 +13,8 @@ export default class TourModel {
 
     return this.rooms[0]
   }
+
+  findRoomBy (id) {
+    return this.rooms.find(room => room.id === id)
+  }
 }

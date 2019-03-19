@@ -1,17 +1,17 @@
-import {Raycaster, Vector3} from "three"
-import GateModel from "../model/gate-model"
+import { Raycaster, Vector3 } from 'three'
+import GateModel from '../model/gate-model'
 
-function anIntersectedGateModel(intersect) {
+function anIntersectedGateModel (intersect) {
   return intersect.object.userData instanceof GateModel
 }
 
 export default class IntersectDetector {
-  constructor(scene, camera) {
+  constructor (scene, camera) {
     this.scene = scene
     this.camera = camera
   }
 
-  gateModel(event) {
+  gateModel (event) {
     const mouseX = (event.clientX / window.innerWidth) * 2 - 1
     const mouseY = -(event.clientY / window.innerHeight) * 2 + 1
 

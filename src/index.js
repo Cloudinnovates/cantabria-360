@@ -1,9 +1,8 @@
-/* global FileReader, requestAnimationFrame */
+/* global requestAnimationFrame */
 
 import {
   Math as ThreeMath,
   PerspectiveCamera,
-  Raycaster,
   Scene,
   Vector3,
   WebGLRenderer
@@ -11,7 +10,7 @@ import {
 import GateMesh from './gate-mesh'
 import PanoramaMesh from './panorama-mesh'
 import { firstTour } from './data/tours'
-import IntersectDetector from "./three/intersect-detector"
+import IntersectDetector from './three/intersect-detector'
 
 let currentTour = firstTour
 const scene = new Scene()
@@ -20,6 +19,8 @@ camera.target = new Vector3(0, 0, 0)
 const renderer = new WebGLRenderer()
 renderer.setPixelRatio(window.devicePixelRatio)
 renderer.setSize(window.innerWidth, window.innerHeight)
+// TODO Should not be global, maybe, when scene is rebuilt, I don't need it to be global
+const panorama = new PanoramaMesh()
 
 var isUserInteracting = false
 
@@ -31,72 +32,63 @@ var lat = 0; var onMouseDownLat = 0
 
 var phi = 0; var theta = 0
 
-const panoramas = [
-  'assets/images/entrance.jpg',
-  'assets/images/kitchen.jpg',
-  'assets/images/bedroom.jpg',
-  'assets/images/bathroom.jpg'
-]
-let panoramaIndex = 0
-
 initCube()
 init()
 animate()
 
 function initCube () {
-  const gateMesh = new GateMesh()
   const startingRoom = currentTour.startingRoom()
+
+  panorama.create(scene, startingRoom.panorama)
+
+  const gateMesh = new GateMesh()
   startingRoom.gates.forEach(gate => gateMesh.create(scene, gate))
 }
 
 function init () {
-  const panorama = new PanoramaMesh()
-  panorama.create(scene, panoramas[panoramaIndex])
-
   const container = document.getElementById('container')
   container.appendChild(renderer.domElement)
 
   document.addEventListener('mousedown', onPointerStart, false)
   document.addEventListener('mousemove', onPointerMove, false)
   document.addEventListener('mouseup', onPointerUp, false)
-
-  document.addEventListener('wheel', onDocumentMouseWheel, false)
-
   document.addEventListener('touchstart', onPointerStart, false)
   document.addEventListener('touchmove', onPointerMove, false)
   document.addEventListener('touchend', onPointerUp, false)
 
+  document.addEventListener('wheel', onDocumentMouseWheel, false)
+
   //
 
-  document.addEventListener('dragover', function (event) {
-    event.preventDefault()
-    event.dataTransfer.dropEffect = 'copy'
-  }, false)
+  // document.addEventListener('dragover', function (event) {
+  //   event.preventDefault()
+  //   event.dataTransfer.dropEffect = 'copy'
+  // }, false)
+  //
+  // document.addEventListener('dragenter', function () {
+  //   document.body.style.opacity = 0.5
+  // }, false)
+  //
+  // document.addEventListener('dragleave', function () {
+  //   document.body.style.opacity = 1
+  // }, false)
+  //
+  // document.addEventListener('drop', function (event) {
+  //   event.preventDefault()
+  //
+  //   const reader = new FileReader()
+  //   reader.addEventListener('load', function (event) {
+  //     panorama.update(event.target.result)
+  //   }, false)
+  //   reader.readAsDataURL(event.dataTransfer.files[0])
+  //
+  //   document.body.style.opacity = 1
+  // }, false)
 
-  document.addEventListener('dragenter', function () {
-    document.body.style.opacity = 0.5
-  }, false)
-
-  document.addEventListener('dragleave', function () {
-    document.body.style.opacity = 1
-  }, false)
-
-  document.addEventListener('drop', function (event) {
-    event.preventDefault()
-
-    const reader = new FileReader()
-    reader.addEventListener('load', function (event) {
-      panorama.update(event.target.result)
-    }, false)
-    reader.readAsDataURL(event.dataTransfer.files[0])
-
-    document.body.style.opacity = 1
-  }, false)
-
-  document.onkeyup = function (event) {
-    panoramaIndex = (panoramaIndex + 1) % panoramas.length
-    panorama.update(panoramas[panoramaIndex])
-  }
+  // document.onkeyup = function (event) {
+  //   panoramaIndex = (panoramaIndex + 1) % panoramas.length
+  //   panorama.update(panoramas[panoramaIndex])
+  // }
 
   //
 
@@ -124,13 +116,15 @@ function onPointerStart (event) {
 }
 
 function onPointerMove (event) {
-  if (isUserInteracting === true) {
-    var clientX = event.clientX || event.touches[0].clientX
-    var clientY = event.clientY || event.touches[0].clientY
-
-    lon = (onMouseDownMouseX - clientX) * 0.1 + onMouseDownLon
-    lat = (clientY - onMouseDownMouseY) * 0.1 + onMouseDownLat
+  if (isUserInteracting !== true) {
+    return
   }
+
+  const clientX = event.clientX || event.touches[0].clientX
+  const clientY = event.clientY || event.touches[0].clientY
+
+  lon = (onMouseDownMouseX - clientX) * 0.1 + onMouseDownLon
+  lat = (clientY - onMouseDownMouseY) * 0.1 + onMouseDownLat
 }
 
 function onPointerUp (event) {
@@ -140,7 +134,7 @@ function onPointerUp (event) {
   const detector = new IntersectDetector(scene, camera)
   const intersected = detector.gateModel(event)
   if (intersected) {
-    console.log('Lets go to', intersected.goesTo)
+    switchRooms(intersected)
   }
 }
 
@@ -173,4 +167,10 @@ function update () {
   camera.lookAt(camera.target)
 
   renderer.render(scene, camera)
+}
+
+function switchRooms (throughGate) {
+  const targetRoomId = throughGate.goesTo
+  const targetRoom = currentTour.findRoomBy(targetRoomId)
+  panorama.update(targetRoom.panorama)
 }

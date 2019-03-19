@@ -16,8 +16,10 @@ export default class PanoramaMesh {
     const material = new MeshBasicMaterial({ map: texture })
     const mesh = new Mesh(geometry, material)
     mesh.name = 'panorama'
+    mesh.userData = this
 
     this.material = material
+
     scene.add(mesh)
   }
 
