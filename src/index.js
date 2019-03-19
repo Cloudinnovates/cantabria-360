@@ -140,7 +140,7 @@ function onPointerUp (event) {
   const detector = new IntersectDetector(scene, camera)
   const intersected = detector.gateModel(event)
   if (intersected) {
-    console.log(intersected)
+    console.log('Lets go to', intersected.goesTo)
   }
 }
 
