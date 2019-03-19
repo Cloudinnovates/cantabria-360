@@ -67,7 +67,8 @@ export default class GateMesh {
     const sprite = new Sprite(crateMaterial)
     sprite.position.set(x, y, z)
     sprite.scale.set(50, 50, 1.0)
-    sprite.name = `img-${gate.id}`
+    sprite.name = `gate-${gate.id}`
+    sprite.userData = gate
 
     // add some text
     const text = makeTextSprite(` ${gate.label} `)

@@ -11,6 +11,7 @@ import {
 import GateMesh from './gate-mesh'
 import PanoramaMesh from './panorama-mesh'
 import { firstTour } from './data/tours'
+import IntersectDetector from "./three/intersect-detector"
 
 let currentTour = firstTour
 const scene = new Scene()
@@ -130,26 +131,17 @@ function onPointerMove (event) {
     lon = (onMouseDownMouseX - clientX) * 0.1 + onMouseDownLon
     lat = (clientY - onMouseDownMouseY) * 0.1 + onMouseDownLat
   }
-
-  // detect intersections
-  const mouseX = (event.clientX / window.innerWidth) * 2 - 1
-  const mouseY = -(event.clientY / window.innerHeight) * 2 + 1
-
-  var vector = new Vector3(mouseX, mouseY, 1)
-  vector.unproject(camera)
-  var ray = new Raycaster(camera.position, vector.sub(camera.position).normalize())
-  // create an array containing all objects in the scene with which the ray intersects
-  var intersects = ray.intersectObjects(scene.children)
-
-  for (var i = 0; i < intersects.length; i++) {
-    if (intersects[i].object.name === 'crate-sprite') {
-      console.log('Detected')
-    }
-  }
 }
 
-function onPointerUp () {
+function onPointerUp (event) {
   isUserInteracting = false
+
+  // detect intersections
+  const detector = new IntersectDetector(scene, camera)
+  const intersected = detector.gateModel(event)
+  if (intersected) {
+    console.log('Lets go to', intersected.goesTo)
+  }
 }
 
 function onDocumentMouseWheel (event) {
