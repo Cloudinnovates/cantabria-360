@@ -7,4 +7,22 @@ const bedroomGate = new GateModel({
   position: new Vector3(175, 0, -300)
 })
 
-export { bedroomGate }
+const kitchenGate = new GateModel({
+  id: 'from-entrance-to-kitchen',
+  label: 'Cocina',
+  position: new Vector3(300, 0, 0)
+})
+
+const bathroomGate = new GateModel({
+  id: 'from-entrance-to-bathroom',
+  label: 'Baño',
+  position: new Vector3(300, 0, -200)
+})
+
+const gates = [
+  bedroomGate,
+  kitchenGate,
+  bathroomGate
+]
+
+export { gates, bedroomGate }

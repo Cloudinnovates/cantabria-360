@@ -10,7 +10,7 @@ import {
 } from 'three'
 import GateMesh from './gate-mesh'
 import PanoramaMesh from './panorama-mesh'
-import { bedroomGate } from './data/tours'
+import { gates } from './data/tours'
 
 const scene = new Scene()
 const camera = new PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000)
@@ -43,7 +43,7 @@ animate()
 
 function initCube () {
   const gateMesh = new GateMesh()
-  gateMesh.create(scene, bedroomGate)
+  gates.forEach(gate => gateMesh.create(scene, gate))
 }
 
 function init () {
