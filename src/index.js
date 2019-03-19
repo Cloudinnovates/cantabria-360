@@ -1,9 +1,8 @@
-/* global FileReader, requestAnimationFrame */
+/* global requestAnimationFrame */
 
 import {
   Math as ThreeMath,
   PerspectiveCamera,
-  Raycaster,
   Scene,
   Vector3,
   WebGLRenderer
@@ -11,7 +10,7 @@ import {
 import GateMesh from './gate-mesh'
 import PanoramaMesh from './panorama-mesh'
 import { firstTour } from './data/tours'
-import IntersectDetector from "./three/intersect-detector"
+import IntersectDetector from './three/intersect-detector'
 
 let currentTour = firstTour
 const scene = new Scene()
@@ -44,59 +43,59 @@ init()
 animate()
 
 function initCube () {
-  const gateMesh = new GateMesh()
   const startingRoom = currentTour.startingRoom()
+
+  const panorama = new PanoramaMesh()
+  panorama.create(scene, startingRoom.panorama)
+
+  const gateMesh = new GateMesh()
   startingRoom.gates.forEach(gate => gateMesh.create(scene, gate))
 }
 
 function init () {
-  const panorama = new PanoramaMesh()
-  panorama.create(scene, panoramas[panoramaIndex])
-
   const container = document.getElementById('container')
   container.appendChild(renderer.domElement)
 
   document.addEventListener('mousedown', onPointerStart, false)
   document.addEventListener('mousemove', onPointerMove, false)
   document.addEventListener('mouseup', onPointerUp, false)
-
-  document.addEventListener('wheel', onDocumentMouseWheel, false)
-
   document.addEventListener('touchstart', onPointerStart, false)
   document.addEventListener('touchmove', onPointerMove, false)
   document.addEventListener('touchend', onPointerUp, false)
 
+  document.addEventListener('wheel', onDocumentMouseWheel, false)
+
   //
 
-  document.addEventListener('dragover', function (event) {
-    event.preventDefault()
-    event.dataTransfer.dropEffect = 'copy'
-  }, false)
+  // document.addEventListener('dragover', function (event) {
+  //   event.preventDefault()
+  //   event.dataTransfer.dropEffect = 'copy'
+  // }, false)
+  //
+  // document.addEventListener('dragenter', function () {
+  //   document.body.style.opacity = 0.5
+  // }, false)
+  //
+  // document.addEventListener('dragleave', function () {
+  //   document.body.style.opacity = 1
+  // }, false)
+  //
+  // document.addEventListener('drop', function (event) {
+  //   event.preventDefault()
+  //
+  //   const reader = new FileReader()
+  //   reader.addEventListener('load', function (event) {
+  //     panorama.update(event.target.result)
+  //   }, false)
+  //   reader.readAsDataURL(event.dataTransfer.files[0])
+  //
+  //   document.body.style.opacity = 1
+  // }, false)
 
-  document.addEventListener('dragenter', function () {
-    document.body.style.opacity = 0.5
-  }, false)
-
-  document.addEventListener('dragleave', function () {
-    document.body.style.opacity = 1
-  }, false)
-
-  document.addEventListener('drop', function (event) {
-    event.preventDefault()
-
-    const reader = new FileReader()
-    reader.addEventListener('load', function (event) {
-      panorama.update(event.target.result)
-    }, false)
-    reader.readAsDataURL(event.dataTransfer.files[0])
-
-    document.body.style.opacity = 1
-  }, false)
-
-  document.onkeyup = function (event) {
-    panoramaIndex = (panoramaIndex + 1) % panoramas.length
-    panorama.update(panoramas[panoramaIndex])
-  }
+  // document.onkeyup = function (event) {
+  //   panoramaIndex = (panoramaIndex + 1) % panoramas.length
+  //   panorama.update(panoramas[panoramaIndex])
+  // }
 
   //
 

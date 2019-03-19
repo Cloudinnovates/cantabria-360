@@ -1,6 +1,7 @@
 export default class RoomModel {
-  constructor ({ id, gates }) {
+  constructor ({ id, panorama, gates }) {
     this.id = id
+    this.panorama = panorama
     this.gates = gates
   }
 }
