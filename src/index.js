@@ -19,6 +19,8 @@ camera.target = new Vector3(0, 0, 0)
 const renderer = new WebGLRenderer()
 renderer.setPixelRatio(window.devicePixelRatio)
 renderer.setSize(window.innerWidth, window.innerHeight)
+// TODO Should not be global, maybe, when scene is rebuilt, I don't need it to be global
+const panorama = new PanoramaMesh()
 
 var isUserInteracting = false
 
@@ -30,14 +32,6 @@ var lat = 0; var onMouseDownLat = 0
 
 var phi = 0; var theta = 0
 
-const panoramas = [
-  'assets/images/entrance.jpg',
-  'assets/images/kitchen.jpg',
-  'assets/images/bedroom.jpg',
-  'assets/images/bathroom.jpg'
-]
-let panoramaIndex = 0
-
 initCube()
 init()
 animate()
@@ -45,7 +39,6 @@ animate()
 function initCube () {
   const startingRoom = currentTour.startingRoom()
 
-  const panorama = new PanoramaMesh()
   panorama.create(scene, startingRoom.panorama)
 
   const gateMesh = new GateMesh()
@@ -123,13 +116,15 @@ function onPointerStart (event) {
 }
 
 function onPointerMove (event) {
-  if (isUserInteracting === true) {
-    var clientX = event.clientX || event.touches[0].clientX
-    var clientY = event.clientY || event.touches[0].clientY
-
-    lon = (onMouseDownMouseX - clientX) * 0.1 + onMouseDownLon
-    lat = (clientY - onMouseDownMouseY) * 0.1 + onMouseDownLat
+  if (isUserInteracting !== true) {
+    return
   }
+
+  const clientX = event.clientX || event.touches[0].clientX
+  const clientY = event.clientY || event.touches[0].clientY
+
+  lon = (onMouseDownMouseX - clientX) * 0.1 + onMouseDownLon
+  lat = (clientY - onMouseDownMouseY) * 0.1 + onMouseDownLat
 }
 
 function onPointerUp (event) {
@@ -139,7 +134,7 @@ function onPointerUp (event) {
   const detector = new IntersectDetector(scene, camera)
   const intersected = detector.gateModel(event)
   if (intersected) {
-    console.log('Lets go to', intersected.goesTo)
+    switchRooms(intersected)
   }
 }
 
@@ -172,4 +167,10 @@ function update () {
   camera.lookAt(camera.target)
 
   renderer.render(scene, camera)
+}
+
+function switchRooms (throughGate) {
+  const targetRoomId = throughGate.goesTo
+  const targetRoom = currentTour.findRoomBy(targetRoomId)
+  panorama.update(targetRoom.panorama)
 }
