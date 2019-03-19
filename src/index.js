@@ -1,21 +1,16 @@
 /* global FileReader, requestAnimationFrame */
 
 import {
-  ImageUtils,
   Math as ThreeMath,
-  Mesh,
-  MeshBasicMaterial,
   PerspectiveCamera,
   Raycaster,
   Scene,
-  SphereBufferGeometry,
-  TextureLoader,
   Vector3,
   WebGLRenderer
 } from 'three'
 import GateMesh from './gate-mesh'
-import PanoramaMesh from "./panorama-mesh"
-
+import PanoramaMesh from './panorama-mesh'
+import { gates } from './data/tours'
 
 const scene = new Scene()
 const camera = new PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000)
@@ -23,7 +18,6 @@ camera.target = new Vector3(0, 0, 0)
 const renderer = new WebGLRenderer()
 renderer.setPixelRatio(window.devicePixelRatio)
 renderer.setSize(window.innerWidth, window.innerHeight)
-
 
 var isUserInteracting = false
 
@@ -49,7 +43,7 @@ animate()
 
 function initCube () {
   const gateMesh = new GateMesh()
-  gateMesh.create(scene, new Vector3(175, 0, -300), 'Habitación')
+  gates.forEach(gate => gateMesh.create(scene, gate))
 }
 
 function init () {
