@@ -16,9 +16,11 @@ export default class IntersectDetector {
     const mouseY = -(event.clientY / window.innerHeight) * 2 + 1
 
     const vector = new Vector3(mouseX, mouseY, 1)
-    vector.unproject(this.camera)
+      .unproject(this.camera)
+      .sub(this.camera.position)
+      .normalize()
 
-    const ray = new Raycaster(this.camera.position, vector.sub(this.camera.position).normalize())
+    const ray = new Raycaster(this.camera.position, vector, 1, 1000)
     const intersects = ray.intersectObjects(this.scene.children)
 
     const intersectedSprite = intersects.find(anIntersectedGateModel)
