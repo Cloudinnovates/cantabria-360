@@ -21,8 +21,6 @@ let onMouseDownLon = 0
 let onMouseDownLat = 0
 let lon = 0
 let lat = 0
-let phi = 0
-let theta = 0
 
 let currentTour = firstTour
 
@@ -153,8 +151,8 @@ function moveLongitude () {
 
 function update () {
   lat = Math.max(-85, Math.min(85, lat))
-  phi = ThreeMath.degToRad(90 - lat)
-  theta = ThreeMath.degToRad(lon)
+  const phi = ThreeMath.degToRad(90 - lat)
+  const theta = ThreeMath.degToRad(lon)
 
   camera.target.x = 500 * Math.sin(phi) * Math.cos(theta)
   camera.target.y = 500 * Math.cos(phi)
@@ -162,6 +160,11 @@ function update () {
 
   camera.lookAt(camera.target)
   renderer.render(scene, camera)
+}
+
+function resetCameraCoordinates() {
+  lon = 0
+  lat = 0
 }
 
 function createSceneFrom (room) {
@@ -177,6 +180,7 @@ function createSceneFrom (room) {
 }
 
 function switchRooms (throughGate) {
+  resetCameraCoordinates()
   const targetRoomId = throughGate.goesTo
   const targetRoom = currentTour.findRoomBy(targetRoomId)
   scene = createSceneFrom(targetRoom)

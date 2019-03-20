@@ -6,7 +6,7 @@ import TourModel from '../model/tour-model'
 const fromEntranceToBedroom = new GateModel({
   id: 'from-entrance-to-bedroom',
   label: 'Habitación',
-  position: new Vector3(175, 0, -300),
+  position: new Vector3(100, 0, -300),
   goesTo: 'bedroom'
 })
 
@@ -37,7 +37,7 @@ const entranceRoom = new RoomModel({
 const fromBedroomToEntrance = new GateModel({
   id: 'from-bedroom-to-entrance',
   label: 'Entrada',
-  position: new Vector3(175, 0, -300),
+  position: new Vector3(250, 0, -300),
   goesTo: 'entrance'
 })
 
@@ -49,16 +49,42 @@ const bedroomRoom = new RoomModel({
   ]
 })
 
+const fromKitchenToEntrance = new GateModel({
+  id: 'from-kitchen-to-entrance',
+  label: 'Entrada',
+  position: new Vector3(-200, 0, 0),
+  goesTo: 'entrance'
+})
+
+const fromKitchenToBathroom = new GateModel({
+  id: 'from-kitchen-to-bathroom',
+  label: 'Baño',
+  position: new Vector3(50, 0, -200),
+  goesTo: 'bathroom'
+})
+
 const kitchenRoom = new RoomModel({
   id: 'kitchen',
   panorama: 'assets/images/kitchen.jpg',
-  gates: []
+  gates: [
+    fromKitchenToEntrance,
+    fromKitchenToBathroom
+  ]
+})
+
+const fromBathroomToKitchen = new GateModel({
+  id: 'from-bathroom-to-kitchen',
+  label: 'Cocina',
+  position: new Vector3(200, 0, -300),
+  goesTo: 'kitchen'
 })
 
 const bathroomRoom = new RoomModel({
   id: 'bathroom',
   panorama: 'assets/images/bathroom.jpg',
-  gates: []
+  gates: [
+    fromBathroomToKitchen
+  ]
 })
 
 const firstTour = new TourModel({
