@@ -1,8 +1,8 @@
 export default class RoomModel {
-  constructor ({ id, panorama, gates }) {
+  constructor ({ id, panorama }) {
     this.id = id
     this.panorama = panorama
-    this.gates = gates
+    this.gates = []
   }
 
   allowsGoingTo(gates) {

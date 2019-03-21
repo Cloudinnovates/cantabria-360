@@ -3,6 +3,26 @@ import RoomModel from '../domain/model/room-model'
 import TourModel from '../domain/model/tour-model'
 import Position from "../domain/model/position"
 
+const entranceRoom = new RoomModel({
+  id: 'entrance',
+  panorama: 'assets/images/entrance.jpg',
+})
+
+const bedroomRoom = new RoomModel({
+  id: 'bedroom',
+  panorama: 'assets/images/bedroom.jpg',
+})
+
+const kitchenRoom = new RoomModel({
+  id: 'kitchen',
+  panorama: 'assets/images/kitchen.jpg',
+})
+
+const bathroomRoom = new RoomModel({
+  id: 'bathroom',
+  panorama: 'assets/images/bathroom.jpg',
+})
+
 const fromEntranceToBedroom = new GateModel({
   id: 'from-entrance-to-bedroom',
   label: 'Habitación',
@@ -24,29 +44,11 @@ const fromEntranceToBathroom = new GateModel({
   goesTo: 'bathroom'
 })
 
-const entranceRoom = new RoomModel({
-  id: 'entrance',
-  panorama: 'assets/images/entrance.jpg',
-  gates: [
-    fromEntranceToBedroom,
-    fromEntranceToKitchen,
-    fromEntranceToBathroom
-  ]
-})
-
 const fromBedroomToEntrance = new GateModel({
   id: 'from-bedroom-to-entrance',
   label: 'Entrada',
   position: new Position(250, 0, -300),
   goesTo: 'entrance'
-})
-
-const bedroomRoom = new RoomModel({
-  id: 'bedroom',
-  panorama: 'assets/images/bedroom.jpg',
-  gates: [
-    fromBedroomToEntrance
-  ]
 })
 
 const fromKitchenToEntrance = new GateModel({
@@ -63,28 +65,11 @@ const fromKitchenToBathroom = new GateModel({
   goesTo: 'bathroom'
 })
 
-const kitchenRoom = new RoomModel({
-  id: 'kitchen',
-  panorama: 'assets/images/kitchen.jpg',
-  gates: [
-    fromKitchenToEntrance,
-    fromKitchenToBathroom
-  ]
-})
-
 const fromBathroomToKitchen = new GateModel({
   id: 'from-bathroom-to-kitchen',
   label: 'Cocina',
   position: new Position(200, 0, -300),
   goesTo: 'kitchen'
-})
-
-const bathroomRoom = new RoomModel({
-  id: 'bathroom',
-  panorama: 'assets/images/bathroom.jpg',
-  gates: [
-    fromBathroomToKitchen
-  ]
 })
 
 entranceRoom.allowsGoingTo([
