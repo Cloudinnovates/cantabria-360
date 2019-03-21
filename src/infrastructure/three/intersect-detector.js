@@ -1,5 +1,5 @@
 import { Raycaster, Vector3 } from 'three'
-import GateModel from '../domain/model/gate-model'
+import GateModel from '../../domain/model/gate-model'
 
 function anIntersectedGateModel (intersect) {
   return intersect.object.userData instanceof GateModel

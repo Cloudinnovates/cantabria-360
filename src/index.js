@@ -7,10 +7,10 @@ import {
   Vector3,
   WebGLRenderer
 } from 'three'
-import GateMesh from './gate-mesh'
-import PanoramaMesh from './panorama-mesh'
+import GateMesh from './infrastructure/three/meshes/gate-mesh'
+import PanoramaMesh from './infrastructure/three/meshes/panorama-mesh'
 import { firstTour } from './data/tours'
-import IntersectDetector from './three/intersect-detector'
+import IntersectDetector from './infrastructure/three/intersect-detector'
 
 const CAMERA_MOVEMENT_SPEED = 0
 
