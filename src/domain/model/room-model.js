@@ -5,7 +5,7 @@ export default class RoomModel {
     this.gates = gates
   }
 
-  canVisit(gates) {
+  allowsGoingTo(gates) {
     this.gates = gates
   }
 }

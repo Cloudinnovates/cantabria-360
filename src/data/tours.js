@@ -87,22 +87,22 @@ const bathroomRoom = new RoomModel({
   ]
 })
 
-entranceRoom.canVisit([
+entranceRoom.allowsGoingTo([
   fromEntranceToKitchen,
   fromEntranceToBedroom,
   fromEntranceToBathroom
 ])
 
-bedroomRoom.canVisit([
+bedroomRoom.allowsGoingTo([
   fromBedroomToEntrance
 ])
 
-kitchenRoom.canVisit([
+kitchenRoom.allowsGoingTo([
   fromKitchenToEntrance,
   fromKitchenToBathroom
 ])
 
-bathroomRoom.canVisit([
+bathroomRoom.allowsGoingTo([
   fromBathroomToKitchen
 ])
 
