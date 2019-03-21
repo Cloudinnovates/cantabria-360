@@ -27,49 +27,49 @@ const fromEntranceToBedroom = new GateModel({
   id: 'from-entrance-to-bedroom',
   label: 'Habitación',
   position: new Position(100, 0, -300),
-  goesTo: 'bedroom'
+  goesTo: bedroomRoom
 })
 
 const fromEntranceToKitchen = new GateModel({
   id: 'from-entrance-to-kitchen',
   label: 'Cocina',
   position: new Position(300, 0, 0),
-  goesTo: 'kitchen'
+  goesTo: kitchenRoom
 })
 
 const fromEntranceToBathroom = new GateModel({
   id: 'from-entrance-to-bathroom',
   label: 'Baño',
   position: new Position(300, 0, -200),
-  goesTo: 'bathroom'
+  goesTo: bathroomRoom
 })
 
 const fromBedroomToEntrance = new GateModel({
   id: 'from-bedroom-to-entrance',
   label: 'Entrada',
   position: new Position(250, 0, -300),
-  goesTo: 'entrance'
+  goesTo: entranceRoom
 })
 
 const fromKitchenToEntrance = new GateModel({
   id: 'from-kitchen-to-entrance',
   label: 'Entrada',
   position: new Position(-200, 0, 0),
-  goesTo: 'entrance'
+  goesTo: entranceRoom
 })
 
 const fromKitchenToBathroom = new GateModel({
   id: 'from-kitchen-to-bathroom',
   label: 'Baño',
   position: new Position(50, 0, -200),
-  goesTo: 'bathroom'
+  goesTo: bathroomRoom
 })
 
 const fromBathroomToKitchen = new GateModel({
   id: 'from-bathroom-to-kitchen',
   label: 'Cocina',
   position: new Position(200, 0, -300),
-  goesTo: 'kitchen'
+  goesTo: kitchenRoom
 })
 
 entranceRoom.allowsGoingTo([
