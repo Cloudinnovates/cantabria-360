@@ -162,7 +162,7 @@ function update () {
   renderer.render(scene, camera)
 }
 
-function resetCameraCoordinates() {
+function resetCameraCoordinates () {
   lon = 0
   lat = 0
 }
