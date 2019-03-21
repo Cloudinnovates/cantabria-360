@@ -1,7 +1,7 @@
-import GateModel from '../model/gate-model'
+import GateModel from '../domain/model/gate-model'
 import { Vector3 } from 'three'
-import RoomModel from '../model/room-model'
-import TourModel from '../model/tour-model'
+import RoomModel from '../domain/model/room-model'
+import TourModel from '../domain/model/tour-model'
 
 const fromEntranceToBedroom = new GateModel({
   id: 'from-entrance-to-bedroom',
