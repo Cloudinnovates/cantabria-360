@@ -6,14 +6,14 @@ export default class PanoramaMesh {
     this.material = null
   }
 
-  create (scene, imagePath) {
+  create (scene, panorama) {
     const geometry = new SphereBufferGeometry(500, 60, 40)
 
     // invert the geometry on the x-axis so that all of the faces point inward
     geometry.scale(-1, 1, 1)
 
-    const texture = this.textureLoader.load(imagePath)
-    const material = new MeshBasicMaterial({ map: texture })
+    const texture = this.textureLoader.load(panorama.path)
+    const material = new MeshBasicMaterial({map: texture})
     const mesh = new Mesh(geometry, material)
     mesh.name = 'panorama'
     mesh.userData = this
@@ -21,9 +21,5 @@ export default class PanoramaMesh {
     this.material = material
 
     scene.add(mesh)
-  }
-
-  update (newImagePath) {
-    this.material.map = this.textureLoader.load(newImagePath)
   }
 }
