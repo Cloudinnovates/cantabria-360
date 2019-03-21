@@ -4,4 +4,8 @@ export default class RoomModel {
     this.panorama = panorama
     this.gates = gates
   }
+
+  canVisit(gates) {
+    this.gates = gates
+  }
 }

@@ -17,7 +17,7 @@ const fromEntranceToKitchen = new GateModel({
   goesTo: 'kitchen'
 })
 
-const fromEntranceToBethroom = new GateModel({
+const fromEntranceToBathroom = new GateModel({
   id: 'from-entrance-to-bathroom',
   label: 'Baño',
   position: new Position(300, 0, -200),
@@ -30,7 +30,7 @@ const entranceRoom = new RoomModel({
   gates: [
     fromEntranceToBedroom,
     fromEntranceToKitchen,
-    fromEntranceToBethroom
+    fromEntranceToBathroom
   ]
 })
 
@@ -86,6 +86,25 @@ const bathroomRoom = new RoomModel({
     fromBathroomToKitchen
   ]
 })
+
+entranceRoom.canVisit([
+  fromEntranceToKitchen,
+  fromEntranceToBedroom,
+  fromEntranceToBathroom
+])
+
+bedroomRoom.canVisit([
+  fromBedroomToEntrance
+])
+
+kitchenRoom.canVisit([
+  fromKitchenToEntrance,
+  fromKitchenToBathroom
+])
+
+bathroomRoom.canVisit([
+  fromBathroomToKitchen
+])
 
 const firstTour = new TourModel({
   id: 'first-tour',
