@@ -1,26 +1,26 @@
 import GateModel from '../domain/model/gate-model'
-import { Vector3 } from 'three'
 import RoomModel from '../domain/model/room-model'
 import TourModel from '../domain/model/tour-model'
+import Position from "../domain/model/position"
 
 const fromEntranceToBedroom = new GateModel({
   id: 'from-entrance-to-bedroom',
   label: 'Habitación',
-  position: new Vector3(100, 0, -300),
+  position: new Position(100, 0, -300),
   goesTo: 'bedroom'
 })
 
 const fromEntranceToKitchen = new GateModel({
   id: 'from-entrance-to-kitchen',
   label: 'Cocina',
-  position: new Vector3(300, 0, 0),
+  position: new Position(300, 0, 0),
   goesTo: 'kitchen'
 })
 
 const fromEntranceToBethroom = new GateModel({
   id: 'from-entrance-to-bathroom',
   label: 'Baño',
-  position: new Vector3(300, 0, -200),
+  position: new Position(300, 0, -200),
   goesTo: 'bathroom'
 })
 
@@ -37,7 +37,7 @@ const entranceRoom = new RoomModel({
 const fromBedroomToEntrance = new GateModel({
   id: 'from-bedroom-to-entrance',
   label: 'Entrada',
-  position: new Vector3(250, 0, -300),
+  position: new Position(250, 0, -300),
   goesTo: 'entrance'
 })
 
@@ -52,14 +52,14 @@ const bedroomRoom = new RoomModel({
 const fromKitchenToEntrance = new GateModel({
   id: 'from-kitchen-to-entrance',
   label: 'Entrada',
-  position: new Vector3(-200, 0, 0),
+  position: new Position(-200, 0, 0),
   goesTo: 'entrance'
 })
 
 const fromKitchenToBathroom = new GateModel({
   id: 'from-kitchen-to-bathroom',
   label: 'Baño',
-  position: new Vector3(50, 0, -200),
+  position: new Position(50, 0, -200),
   goesTo: 'bathroom'
 })
 
@@ -75,7 +75,7 @@ const kitchenRoom = new RoomModel({
 const fromBathroomToKitchen = new GateModel({
   id: 'from-bathroom-to-kitchen',
   label: 'Cocina',
-  position: new Vector3(200, 0, -300),
+  position: new Position(200, 0, -300),
   goesTo: 'kitchen'
 })
 

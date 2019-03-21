@@ -1,11 +1,11 @@
-import { Vector3 } from 'three'
+import Position from "./position"
 
 export default class GateModel {
   static empty () {
     return new GateModel({
       id: 'no-gate-id',
       label: 'no-label',
-      position: new Vector3(0, 0, 0),
+      position: new Position(0, 0, 0),
       goesTo: 'no-room'
     })
   }
