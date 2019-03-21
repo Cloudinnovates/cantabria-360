@@ -181,7 +181,5 @@ function createSceneFrom (room) {
 
 function switchRooms (throughGate) {
   resetCameraCoordinates()
-  const targetRoomId = throughGate.goesTo
-  const targetRoom = currentTour.findRoomBy(targetRoomId)
-  scene = createSceneFrom(targetRoom)
+  scene = createSceneFrom(throughGate.goesTo)
 }
