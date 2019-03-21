@@ -12,38 +12,27 @@ import PanoramaMesh from './panorama-mesh'
 import { firstTour } from './data/tours'
 import IntersectDetector from './three/intersect-detector'
 
+const CAMERA_MOVEMENT_SPEED = 0
+
+let isUserInteracting = false
+let onMouseDownMouseX = 0
+let onMouseDownMouseY = 0
+let onMouseDownLon = 0
+let onMouseDownLat = 0
+let lon = 0
+let lat = 0
+
 let currentTour = firstTour
-const scene = new Scene()
+
 const camera = new PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000)
 camera.target = new Vector3(0, 0, 0)
 const renderer = new WebGLRenderer()
 renderer.setPixelRatio(window.devicePixelRatio)
 renderer.setSize(window.innerWidth, window.innerHeight)
-// TODO Should not be global, maybe, when scene is rebuilt, I don't need it to be global
-const panorama = new PanoramaMesh()
 
-var isUserInteracting = false
-
-var onMouseDownMouseX = 0; var onMouseDownMouseY = 0
-
-var lon = 0; var onMouseDownLon = 0
-
-var lat = 0; var onMouseDownLat = 0
-
-var phi = 0; var theta = 0
-
-initCube()
+let scene = createSceneFrom(currentTour.startingRoom())
 init()
 animate()
-
-function initCube () {
-  const startingRoom = currentTour.startingRoom()
-
-  panorama.create(scene, startingRoom.panorama)
-
-  const gateMesh = new GateMesh()
-  startingRoom.gates.forEach(gate => gateMesh.create(scene, gate))
-}
 
 function init () {
   const container = document.getElementById('container')
@@ -148,29 +137,51 @@ function onDocumentMouseWheel (event) {
 
 function animate () {
   requestAnimationFrame(animate)
+  moveLongitude()
   update()
 }
 
-function update () {
-  if (isUserInteracting === false) {
-    lon += 0.1
+function moveLongitude () {
+  if (isUserInteracting !== false) {
+    return
   }
 
+  lon += CAMERA_MOVEMENT_SPEED
+}
+
+function update () {
   lat = Math.max(-85, Math.min(85, lat))
-  phi = ThreeMath.degToRad(90 - lat)
-  theta = ThreeMath.degToRad(lon)
+  const phi = ThreeMath.degToRad(90 - lat)
+  const theta = ThreeMath.degToRad(lon)
 
   camera.target.x = 500 * Math.sin(phi) * Math.cos(theta)
   camera.target.y = 500 * Math.cos(phi)
   camera.target.z = 500 * Math.sin(phi) * Math.sin(theta)
 
   camera.lookAt(camera.target)
-
   renderer.render(scene, camera)
 }
 
+function resetCameraCoordinates() {
+  lon = 0
+  lat = 0
+}
+
+function createSceneFrom (room) {
+  const scene = new Scene()
+
+  const panorama = new PanoramaMesh()
+  panorama.create(scene, room.panorama)
+
+  const gateMesh = new GateMesh()
+  room.gates.forEach(gate => gateMesh.create(scene, gate))
+
+  return scene
+}
+
 function switchRooms (throughGate) {
+  resetCameraCoordinates()
   const targetRoomId = throughGate.goesTo
   const targetRoom = currentTour.findRoomBy(targetRoomId)
-  panorama.update(targetRoom.panorama)
+  scene = createSceneFrom(targetRoom)
 }
