@@ -2,25 +2,26 @@ import GateModel from '../domain/model/gate-model'
 import RoomModel from '../domain/model/room-model'
 import TourModel from '../domain/model/tour-model'
 import Position from '../domain/model/position'
+import Panorama from '../domain/model/panorama'
 
 const entranceRoom = new RoomModel({
   id: 'entrance',
-  panorama: 'assets/images/entrance.jpg'
+  panorama: new Panorama('assets/images/entrance.jpg')
 })
 
 const bedroomRoom = new RoomModel({
   id: 'bedroom',
-  panorama: 'assets/images/bedroom.jpg'
+  panorama: new Panorama('assets/images/bedroom.jpg')
 })
 
 const kitchenRoom = new RoomModel({
   id: 'kitchen',
-  panorama: 'assets/images/kitchen.jpg'
+  panorama: new Panorama('assets/images/kitchen.jpg')
 })
 
 const bathroomRoom = new RoomModel({
   id: 'bathroom',
-  panorama: 'assets/images/bathroom.jpg'
+  panorama: new Panorama('assets/images/bathroom.jpg')
 })
 
 const fromEntranceToBedroom = new GateModel({
