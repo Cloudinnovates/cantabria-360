@@ -1,32 +1,17 @@
 /* global requestAnimationFrame */
 
-import { Math as ThreeMath, Scene } from 'three'
-import GateMesh from './infrastructure/three/meshes/gate-mesh'
-import PanoramaMesh from './infrastructure/three/meshes/panorama-mesh'
-import IntersectDetector from './infrastructure/three/intersect-detector'
-import { firstTour } from './data/tours'
+import {firstTour} from './data/tours'
 import ThreeContext from './infrastructure/three/three-context'
 import Browser from './infrastructure/browser/browser'
-
-const CAMERA_MOVEMENT_SPEED = 0
-
-let isUserInteracting = false
-let onMouseDownMouseX = 0
-let onMouseDownMouseY = 0
-let onMouseDownLon = 0
-let onMouseDownLat = 0
-let lon = 0
-let lat = 0
+import Interaction from "./infrastructure/interaction"
 
 let currentTour = firstTour
 
+const interaction = new Interaction()
 const browser = new Browser()
 const context = new ThreeContext(browser)
 context.init()
-const camera = context.camera
-const renderer = context.renderer
-
-let scene = context.initTour(currentTour)
+context.initTour(currentTour)
 
 init()
 animate()
@@ -83,90 +68,26 @@ function onWindowResize () {
 }
 
 function onPointerStart (event) {
-  isUserInteracting = true
-
-  var clientX = event.clientX || event.touches[0].clientX
-  var clientY = event.clientY || event.touches[0].clientY
-
-  onMouseDownMouseX = clientX
-  onMouseDownMouseY = clientY
-
-  onMouseDownLon = lon
-  onMouseDownLat = lat
+  interaction.start(event, context)
 }
 
 function onPointerMove (event) {
-  if (isUserInteracting !== true) {
-    return
-  }
-
-  const clientX = event.clientX || event.touches[0].clientX
-  const clientY = event.clientY || event.touches[0].clientY
-
-  lon = (onMouseDownMouseX - clientX) * 0.1 + onMouseDownLon
-  lat = (clientY - onMouseDownMouseY) * 0.1 + onMouseDownLat
+  interaction.move(event, context)
 }
 
 function onPointerUp (event) {
-  isUserInteracting = false
-
-  // detect intersections
-  const detector = new IntersectDetector(scene, camera)
-  const intersected = detector.gateModel(event)
-  if (intersected) {
-    switchRooms(intersected)
-  }
+  interaction.end(event, context)
 }
 
 function onDocumentMouseWheel (event) {
   context.zoom(event.deltaY)
 }
 
+function update () {
+  context.update()
+}
+
 function animate () {
   requestAnimationFrame(animate)
-  moveLongitude()
   update()
-}
-
-function moveLongitude () {
-  if (isUserInteracting !== false) {
-    return
-  }
-
-  lon += CAMERA_MOVEMENT_SPEED
-}
-
-function update () {
-  lat = Math.max(-85, Math.min(85, lat))
-  const phi = ThreeMath.degToRad(90 - lat)
-  const theta = ThreeMath.degToRad(lon)
-
-  camera.target.x = 500 * Math.sin(phi) * Math.cos(theta)
-  camera.target.y = 500 * Math.cos(phi)
-  camera.target.z = 500 * Math.sin(phi) * Math.sin(theta)
-
-  camera.lookAt(camera.target)
-  renderer.render(scene, camera)
-}
-
-function resetCameraCoordinates () {
-  lon = 0
-  lat = 0
-}
-
-function createSceneFrom (room) {
-  const scene = new Scene()
-
-  const panorama = new PanoramaMesh()
-  panorama.create(scene, room.panorama)
-
-  const gateMesh = new GateMesh()
-  room.gates.forEach(gate => gateMesh.create(scene, gate))
-
-  return scene
-}
-
-function switchRooms (throughGate) {
-  resetCameraCoordinates()
-  scene = createSceneFrom(throughGate.goesTo)
 }

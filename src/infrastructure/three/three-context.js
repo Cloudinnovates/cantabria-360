@@ -1,8 +1,10 @@
-import { Math as ThreeMath, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three'
+import {Math as ThreeMath, PerspectiveCamera, Scene, Vector3, WebGLRenderer} from 'three'
 import Context from '../../domain/graph/context'
 import PanoramaMesh from './meshes/panorama-mesh'
 import GateMesh from './meshes/gate-mesh'
+import IntersectDetector from "./intersect-detector"
 
+const CAMERA_MOVEMENT_SPEED = 0
 const DEFAULT_FOV = 70
 const MINIMUM_FOV = 10
 const MAXIMUM_FOV = 75
@@ -23,6 +25,8 @@ export default class ThreeContext extends Context {
   constructor (browser) {
     super()
     this.browser = browser
+    this.longitude = 0
+    this.latitude = 0
   }
 
   init () {
@@ -42,6 +46,19 @@ export default class ThreeContext extends Context {
     return this.scene
   }
 
+  // TODO coordinates seems to have their own entity and logic
+  coordinates () {
+    return {
+      longitude: this.longitude,
+      latitude: this.latitude
+    }
+  }
+
+  setCoordinates ({ longitude, latitude }) {
+    this.longitude = longitude
+    this.latitude = latitude
+  }
+
   resize () {
     this.camera.aspect = this.browser.windowAspect()
     this.camera.updateProjectionMatrix()
@@ -53,5 +70,36 @@ export default class ThreeContext extends Context {
     const fov = this.camera.fov + delta * 0.05
     this.camera.fov = ThreeMath.clamp(fov, MINIMUM_FOV, MAXIMUM_FOV)
     this.camera.updateProjectionMatrix()
+  }
+
+  update () {
+    this.longitude += CAMERA_MOVEMENT_SPEED
+    this.latitude = Math.max(-85, Math.min(85, this.latitude))
+    const phi = ThreeMath.degToRad(90 - this.latitude)
+    const theta = ThreeMath.degToRad(this.longitude)
+
+    this.camera.target.x = 500 * Math.sin(phi) * Math.cos(theta)
+    this.camera.target.y = 500 * Math.cos(phi)
+    this.camera.target.z = 500 * Math.sin(phi) * Math.sin(theta)
+
+    this.camera.lookAt(this.camera.target)
+    this.renderer.render(this.scene, this.camera)
+  }
+
+  detectIntersections (event) {
+    const detector = new IntersectDetector(this.scene, this.camera)
+    const intersected = detector.gateModel(event)
+    if (intersected) {
+      this.switchRooms(intersected)
+    }
+  }
+
+  switchRooms (throughGate) {
+    this.setCoordinates({
+      longitude: 0,
+      latitude: 0
+    })
+
+    this.scene = createSceneFrom(throughGate.goesTo)
   }
 }
