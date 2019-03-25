@@ -1,8 +1,9 @@
-import {Math as ThreeMath, PerspectiveCamera, Scene, Vector3, WebGLRenderer} from 'three'
+import { Math as ThreeMath, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three'
 import Context from '../../domain/graph/context'
 import PanoramaMesh from './meshes/panorama-mesh'
 import GateMesh from './meshes/gate-mesh'
-import IntersectDetector from "./intersect-detector"
+import IntersectDetector from './intersect-detector'
+import GeographicCoordinates from "./geographic-coordinates"
 
 const CAMERA_MOVEMENT_SPEED = 0
 const DEFAULT_FOV = 70
@@ -27,6 +28,7 @@ export default class ThreeContext extends Context {
     this.browser = browser
     this.longitude = 0
     this.latitude = 0
+    this.geoCoor = new GeographicCoordinates({})
   }
 
   init () {
@@ -48,15 +50,13 @@ export default class ThreeContext extends Context {
 
   // TODO coordinates seems to have their own entity and logic
   coordinates () {
-    return {
-      longitude: this.longitude,
-      latitude: this.latitude
-    }
+    return this.geoCoor
   }
 
-  setCoordinates ({ longitude, latitude }) {
-    this.longitude = longitude
-    this.latitude = latitude
+  setCoordinates (geoCoor) {
+    this.geoCoor = geoCoor
+    this.longitude = geoCoor.longitude
+    this.latitude = geoCoor.latitude
   }
 
   resize () {
@@ -73,8 +73,7 @@ export default class ThreeContext extends Context {
   }
 
   update () {
-    this.longitude += CAMERA_MOVEMENT_SPEED
-    this.latitude = Math.max(-85, Math.min(85, this.latitude))
+    this.setCoordinates(this.geoCoor.moveLongitude(CAMERA_MOVEMENT_SPEED))
     const phi = ThreeMath.degToRad(90 - this.latitude)
     const theta = ThreeMath.degToRad(this.longitude)
 
@@ -95,11 +94,7 @@ export default class ThreeContext extends Context {
   }
 
   switchRooms (throughGate) {
-    this.setCoordinates({
-      longitude: 0,
-      latitude: 0
-    })
-
+    this.setCoordinates(new GeographicCoordinates({}))
     this.scene = createSceneFrom(throughGate.goesTo)
   }
 }

@@ -1,9 +1,9 @@
 /* global requestAnimationFrame */
 
-import {firstTour} from './data/tours'
+import { firstTour } from './data/tours'
 import ThreeContext from './infrastructure/three/three-context'
 import Browser from './infrastructure/browser/browser'
-import Interaction from "./infrastructure/interaction"
+import Interaction from './infrastructure/interaction'
 
 let currentTour = firstTour
 

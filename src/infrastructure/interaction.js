@@ -1,3 +1,5 @@
+import GeographicCoordinates from "./three/geographic-coordinates"
+
 export default class Interaction {
   constructor () {
     this.interacting = false
@@ -25,8 +27,8 @@ export default class Interaction {
     // TODO coordinates seems to have their own entity and logic
     const longitude = (this.startX - clientX) * 0.1 + this.startLongitude
     const latitude = (clientY - this.startY) * 0.1 + this.startLatitude
-
-    context.setCoordinates({ longitude, latitude })
+    const coordinates = new GeographicCoordinates({ longitude, latitude })
+    context.setCoordinates(coordinates)
   }
 
   end (event, context) {
