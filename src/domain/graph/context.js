@@ -1,5 +1,5 @@
 export default class Context {
-  init() {
+  init () {
     throw new Error('Must be overridden')
   }
 }

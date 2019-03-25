@@ -1,18 +1,12 @@
 /* global requestAnimationFrame */
 
-import {
-  Math as ThreeMath,
-  PerspectiveCamera,
-  Scene,
-  Vector3,
-  WebGLRenderer
-} from 'three'
+import { Math as ThreeMath, Scene } from 'three'
 import GateMesh from './infrastructure/three/meshes/gate-mesh'
 import PanoramaMesh from './infrastructure/three/meshes/panorama-mesh'
 import IntersectDetector from './infrastructure/three/intersect-detector'
 import { firstTour } from './data/tours'
-import ThreeContext from "./infrastructure/three/three-context"
-import Browser from "./infrastructure/browser/browser"
+import ThreeContext from './infrastructure/three/three-context'
+import Browser from './infrastructure/browser/browser'
 
 const CAMERA_MOVEMENT_SPEED = 0
 

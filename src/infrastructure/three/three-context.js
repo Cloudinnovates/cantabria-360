@@ -1,7 +1,7 @@
-import Context from "../../domain/graph/context"
-import {PerspectiveCamera, Scene, Vector3, WebGLRenderer} from "three"
-import PanoramaMesh from "./meshes/panorama-mesh"
-import GateMesh from "./meshes/gate-mesh"
+import Context from '../../domain/graph/context'
+import { PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three'
+import PanoramaMesh from './meshes/panorama-mesh'
+import GateMesh from './meshes/gate-mesh'
 
 function createSceneFrom (room) {
   const scene = new Scene()
