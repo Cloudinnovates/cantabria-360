@@ -9,8 +9,8 @@ import {
 } from 'three'
 import GateMesh from './infrastructure/three/meshes/gate-mesh'
 import PanoramaMesh from './infrastructure/three/meshes/panorama-mesh'
-import { firstTour } from './data/tours'
 import IntersectDetector from './infrastructure/three/intersect-detector'
+import { firstTour } from './data/tours'
 
 const CAMERA_MOVEMENT_SPEED = 0
 
@@ -30,9 +30,19 @@ const renderer = new WebGLRenderer()
 renderer.setPixelRatio(window.devicePixelRatio)
 renderer.setSize(window.innerWidth, window.innerHeight)
 
-let scene = createSceneFrom(currentTour.startingRoom())
+let scene
+
+initTour(currentTour)
 init()
 animate()
+
+function initTour (tour) {
+  const info = document.getElementById('info')
+  console.log(tour)
+  info.innerHTML = tour.description
+
+  scene = createSceneFrom(currentTour.startingRoom())
+}
 
 function init () {
   const container = document.getElementById('container')

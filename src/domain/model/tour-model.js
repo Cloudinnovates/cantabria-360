@@ -1,8 +1,9 @@
 import GateModel from './gate-model'
 
 export default class TourModel {
-  constructor ({ id, rooms }) {
+  constructor ({ id, description, rooms }) {
     this.id = id
+    this.description = description
     this.rooms = rooms
   }
 

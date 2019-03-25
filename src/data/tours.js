@@ -94,6 +94,7 @@ bathroomRoom.allowsGoingTo([
 
 const firstTour = new TourModel({
   id: 'first-tour',
+  description: 'El primer tour virtual de <a href="https://www.mycantabria.com">MyCantabria</a>',
   rooms: [
     entranceRoom,
     bedroomRoom,
@@ -102,4 +103,4 @@ const firstTour = new TourModel({
   ]
 })
 
-export { firstTour, entranceRoom }
+export { firstTour }
