@@ -12,6 +12,12 @@ export default class GeographicCoordinates {
     return new GeographicCoordinates({ longitude, latitude })
   }
 
+  moveDelta (deltaX, deltaY) {
+    const longitude = deltaX + this.longitude
+    const latitude = deltaY + this.latitude
+    return new GeographicCoordinates({ longitude, latitude })
+  }
+
   toRadial () {
     const phi = ThreeMath.degToRad(90 - this.latitude)
     const theta = ThreeMath.degToRad(this.longitude)
