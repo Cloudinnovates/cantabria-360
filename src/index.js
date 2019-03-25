@@ -79,10 +79,7 @@ function init () {
 }
 
 function onWindowResize () {
-  camera.aspect = window.innerWidth / window.innerHeight
-  camera.updateProjectionMatrix()
-
-  renderer.setSize(window.innerWidth, window.innerHeight)
+  context.resize()
 }
 
 function onPointerStart (event) {
@@ -122,11 +119,7 @@ function onPointerUp (event) {
 }
 
 function onDocumentMouseWheel (event) {
-  var fov = camera.fov + event.deltaY * 0.05
-
-  camera.fov = ThreeMath.clamp(fov, 10, 75)
-
-  camera.updateProjectionMatrix()
+  context.zoom(event.deltaY)
 }
 
 function animate () {
