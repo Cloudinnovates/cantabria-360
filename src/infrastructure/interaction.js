@@ -1,5 +1,6 @@
-import GeographicCoordinates from "./three/geographic-coordinates"
+import GeographicCoordinates from './three/geographic-coordinates'
 
+// TODO check event.touches is defined
 export default class Interaction {
   constructor () {
     this.interacting = false

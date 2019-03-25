@@ -3,7 +3,7 @@ import Context from '../../domain/graph/context'
 import PanoramaMesh from './meshes/panorama-mesh'
 import GateMesh from './meshes/gate-mesh'
 import IntersectDetector from './intersect-detector'
-import GeographicCoordinates from "./geographic-coordinates"
+import GeographicCoordinates from './geographic-coordinates'
 
 const CAMERA_MOVEMENT_SPEED = 0
 const DEFAULT_FOV = 70
@@ -26,8 +26,6 @@ export default class ThreeContext extends Context {
   constructor (browser) {
     super()
     this.browser = browser
-    this.longitude = 0
-    this.latitude = 0
     this.geoCoor = new GeographicCoordinates({})
   }
 
@@ -48,15 +46,12 @@ export default class ThreeContext extends Context {
     return this.scene
   }
 
-  // TODO coordinates seems to have their own entity and logic
   coordinates () {
     return this.geoCoor
   }
 
   setCoordinates (geoCoor) {
     this.geoCoor = geoCoor
-    this.longitude = geoCoor.longitude
-    this.latitude = geoCoor.latitude
   }
 
   resize () {
@@ -74,8 +69,8 @@ export default class ThreeContext extends Context {
 
   update () {
     this.setCoordinates(this.geoCoor.moveLongitude(CAMERA_MOVEMENT_SPEED))
-    const phi = ThreeMath.degToRad(90 - this.latitude)
-    const theta = ThreeMath.degToRad(this.longitude)
+    // TODO move more logic to geographical coordinates
+    const { phi, theta } = this.geoCoor.toRadial()
 
     this.camera.target.x = 500 * Math.sin(phi) * Math.cos(theta)
     this.camera.target.y = 500 * Math.cos(phi)
