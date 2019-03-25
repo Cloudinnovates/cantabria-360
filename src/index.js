@@ -11,6 +11,8 @@ import GateMesh from './infrastructure/three/meshes/gate-mesh'
 import PanoramaMesh from './infrastructure/three/meshes/panorama-mesh'
 import IntersectDetector from './infrastructure/three/intersect-detector'
 import { firstTour } from './data/tours'
+import ThreeContext from "./infrastructure/three/three-context"
+import Browser from "./infrastructure/browser/browser"
 
 const CAMERA_MOVEMENT_SPEED = 0
 
@@ -24,30 +26,18 @@ let lat = 0
 
 let currentTour = firstTour
 
-const camera = new PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000)
-camera.target = new Vector3(0, 0, 0)
-const renderer = new WebGLRenderer()
-renderer.setPixelRatio(window.devicePixelRatio)
-renderer.setSize(window.innerWidth, window.innerHeight)
+const browser = new Browser()
+const context = new ThreeContext(browser)
+context.init()
+const camera = context.camera
+const renderer = context.renderer
 
-let scene
+let scene = context.initTour(currentTour)
 
-initTour(currentTour)
 init()
 animate()
 
-function initTour (tour) {
-  const info = document.getElementById('info')
-  console.log(tour)
-  info.innerHTML = tour.description
-
-  scene = createSceneFrom(currentTour.startingRoom())
-}
-
 function init () {
-  const container = document.getElementById('container')
-  container.appendChild(renderer.domElement)
-
   document.addEventListener('mousedown', onPointerStart, false)
   document.addEventListener('mousemove', onPointerMove, false)
   document.addEventListener('mouseup', onPointerUp, false)
