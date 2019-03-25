@@ -13,7 +13,7 @@ export default class PanoramaMesh {
     geometry.scale(-1, 1, 1)
 
     const texture = this.textureLoader.load(panorama.path)
-    const material = new MeshBasicMaterial({map: texture})
+    const material = new MeshBasicMaterial({ map: texture })
     const mesh = new Mesh(geometry, material)
     mesh.name = 'panorama'
     mesh.userData = this
