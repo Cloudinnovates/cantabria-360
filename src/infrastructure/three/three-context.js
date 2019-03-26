@@ -68,16 +68,17 @@ export default class ThreeContext extends Context {
   }
 
   update () {
-    this.setCoordinates(this.geoCoor.moveLongitude(CAMERA_MOVEMENT_SPEED))
-    // TODO move more logic to geographical coordinates
-    const { phi, theta } = this.geoCoor.toRadial()
+    const updatedCoordinates = this.geoCoor.moveLongitude(CAMERA_MOVEMENT_SPEED)
 
-    this.camera.target.x = 500 * Math.sin(phi) * Math.cos(theta)
-    this.camera.target.y = 500 * Math.cos(phi)
-    this.camera.target.z = 500 * Math.sin(phi) * Math.sin(theta)
+    // target MUST be updated this way, `camera.target = position` doesn't work
+    const position = updatedCoordinates.position()
+    this.camera.target.x = position.x
+    this.camera.target.y = position.y
+    this.camera.target.z = position.z
 
     this.camera.lookAt(this.camera.target)
     this.renderer.render(this.scene, this.camera)
+    this.setCoordinates(updatedCoordinates)
   }
 
   detectIntersections (event) {

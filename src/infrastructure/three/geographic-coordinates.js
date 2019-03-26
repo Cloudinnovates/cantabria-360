@@ -1,4 +1,5 @@
 import { Math as ThreeMath } from 'three'
+import Position from '../../domain/model/position'
 
 export default class GeographicCoordinates {
   constructor ({ longitude = 0, latitude = 0 }) {
@@ -18,9 +19,13 @@ export default class GeographicCoordinates {
     return new GeographicCoordinates({ longitude, latitude })
   }
 
-  toRadial () {
+  position () {
     const phi = ThreeMath.degToRad(90 - this.latitude)
     const theta = ThreeMath.degToRad(this.longitude)
-    return { phi, theta }
+    return new Position(
+      500 * Math.sin(phi) * Math.cos(theta),
+      500 * Math.cos(phi),
+      500 * Math.sin(phi) * Math.sin(theta)
+    )
   }
 }
