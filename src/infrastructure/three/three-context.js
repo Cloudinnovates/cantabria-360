@@ -43,15 +43,6 @@ export default class ThreeContext extends Context {
     this.browser.renderScene(this.renderer)
   }
 
-  // todo write as a property with its get and set
-  getCoordinates () {
-    return this.coordinates
-  }
-
-  setCoordinates (coordinates) {
-    this.coordinates = coordinates
-  }
-
   resize () {
     this.camera.aspect = this.browser.windowAspect()
     this.camera.updateProjectionMatrix()
@@ -77,7 +68,7 @@ export default class ThreeContext extends Context {
 
     this.camera.lookAt(this.camera.target)
     this.renderer.render(this.scene, this.camera)
-    this.setCoordinates(updatedCoordinates)
+    this.coordinates = updatedCoordinates
   }
 
   detectIntersections (event) {
@@ -89,7 +80,7 @@ export default class ThreeContext extends Context {
   }
 
   switchRooms (throughGate) {
-    this.setCoordinates(new GeographicCoordinates({}))
+    this.coordinates = new GeographicCoordinates({})
     this.scene = createSceneFrom(throughGate.goesTo)
   }
 }

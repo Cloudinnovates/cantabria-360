@@ -23,7 +23,7 @@ export default class Interaction {
     this.startX = extract(event, 'clientX')
     this.startY = extract(event, 'clientY')
 
-    this.startCoordinates = this.context.getCoordinates()
+    this.startCoordinates = this.context.coordinates
   }
 
   move (event) {
@@ -36,7 +36,7 @@ export default class Interaction {
 
     const deltaX = (this.startX - clientX) * 0.1
     const deltaY = (clientY - this.startY) * 0.1
-    this.context.setCoordinates(this.startCoordinates.move(deltaX, deltaY))
+    this.context.coordinates = this.startCoordinates.move(deltaX, deltaY)
   }
 
   end (event) {
