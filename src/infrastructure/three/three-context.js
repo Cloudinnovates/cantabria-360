@@ -29,21 +29,18 @@ export default class ThreeContext extends Context {
     this.geoCoor = new GeographicCoordinates({})
   }
 
-  init () {
+  init (tour) {
     this.camera = new PerspectiveCamera(DEFAULT_FOV, this.browser.windowAspect(), 1, 1000)
     this.camera.target = new Vector3(0, 0, 0)
 
     this.renderer = new WebGLRenderer()
     this.renderer.setPixelRatio(this.browser.pixelRatio())
     this.renderer.setSize(this.browser.width(), this.browser.height())
-  }
 
-  initTour (tour) {
-    this.browser.setTourDescription(tour)
     this.scene = createSceneFrom(tour.startingRoom())
-    this.browser.renderScene(this.renderer)
 
-    return this.scene
+    this.browser.setTourDescription(tour)
+    this.browser.renderScene(this.renderer)
   }
 
   coordinates () {

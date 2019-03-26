@@ -26,7 +26,6 @@ function animate () {
   context.update()
 }
 
-context.init()
-context.initTour(firstTour)
+context.init(firstTour)
 configureEventListeners()
 animate()
