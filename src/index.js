@@ -5,85 +5,28 @@ import ThreeContext from './infrastructure/three/three-context'
 import Browser from './infrastructure/browser/browser'
 import Interaction from './infrastructure/interaction'
 
-let currentTour = firstTour
-
 const browser = new Browser()
 const context = new ThreeContext(browser)
 const interaction = new Interaction(context)
-context.init()
-context.initTour(currentTour)
 
-init()
-animate()
+function configureEventListeners () {
+  document.addEventListener('mousedown', interaction.start.bind(interaction), false)
+  document.addEventListener('mousemove', interaction.move.bind(interaction), false)
+  document.addEventListener('mouseup', interaction.end.bind(interaction), false)
+  document.addEventListener('touchstart', interaction.start.bind(interaction), false)
+  document.addEventListener('touchmove', interaction.move.bind(interaction), false)
+  document.addEventListener('touchend', interaction.end.bind(interaction), false)
+  document.addEventListener('wheel', context.zoom.bind(context), false)
 
-function init () {
-  document.addEventListener('mousedown', onPointerStart, false)
-  document.addEventListener('mousemove', onPointerMove, false)
-  document.addEventListener('mouseup', onPointerUp, false)
-  document.addEventListener('touchstart', onPointerStart, false)
-  document.addEventListener('touchmove', onPointerMove, false)
-  document.addEventListener('touchend', onPointerUp, false)
-
-  document.addEventListener('wheel', onDocumentMouseWheel, false)
-
-  //
-
-  // document.addEventListener('dragover', function (event) {
-  //   event.preventDefault()
-  //   event.dataTransfer.dropEffect = 'copy'
-  // }, false)
-  //
-  // document.addEventListener('dragenter', function () {
-  //   document.body.style.opacity = 0.5
-  // }, false)
-  //
-  // document.addEventListener('dragleave', function () {
-  //   document.body.style.opacity = 1
-  // }, false)
-  //
-  // document.addEventListener('drop', function (event) {
-  //   event.preventDefault()
-  //
-  //   const reader = new FileReader()
-  //   reader.addEventListener('load', function (event) {
-  //     panorama.update(event.target.result)
-  //   }, false)
-  //   reader.readAsDataURL(event.dataTransfer.files[0])
-  //
-  //   document.body.style.opacity = 1
-  // }, false)
-
-  // document.onkeyup = function (event) {
-  //   panoramaIndex = (panoramaIndex + 1) % panoramas.length
-  //   panorama.update(panoramas[panoramaIndex])
-  // }
-
-  //
-
-  window.addEventListener('resize', onWindowResize, false)
-}
-
-function onWindowResize () {
-  context.resize()
-}
-
-function onPointerStart (event) {
-  interaction.start(event)
-}
-
-function onPointerMove (event) {
-  interaction.move(event)
-}
-
-function onPointerUp (event) {
-  interaction.end(event)
-}
-
-function onDocumentMouseWheel (event) {
-  context.zoom(event.deltaY)
+  window.addEventListener('resize', context.resize.bind(context), false)
 }
 
 function animate () {
   requestAnimationFrame(animate)
   context.update()
 }
+
+context.init()
+context.initTour(firstTour)
+configureEventListeners()
+animate()

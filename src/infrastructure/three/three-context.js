@@ -61,7 +61,8 @@ export default class ThreeContext extends Context {
     this.renderer.setSize(this.browser.width(), this.browser.height())
   }
 
-  zoom (delta) {
+  zoom (event) {
+    const delta = event.deltaY
     const fov = this.camera.fov + delta * 0.05
     this.camera.fov = ThreeMath.clamp(fov, MINIMUM_FOV, MAXIMUM_FOV)
     this.camera.updateProjectionMatrix()
