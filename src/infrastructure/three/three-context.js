@@ -3,7 +3,7 @@ import Context from '../../domain/graph/context'
 import PanoramaMesh from './meshes/panorama-mesh'
 import GateMesh from './meshes/gate-mesh'
 import IntersectDetector from './intersect-detector'
-import GeographicCoordinates from './geographic-coordinates'
+import GeographicCoordinates from '../../domain/graph/geographic-coordinates'
 
 const CAMERA_MOVEMENT_SPEED = 0
 const DEFAULT_FOV = 70

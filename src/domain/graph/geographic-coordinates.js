@@ -1,4 +1,4 @@
-import Position from '../../domain/model/position'
+import Position from '../model/position'
 
 function clamp (value, min, max) {
   return Math.max(min, Math.min(max, value))
