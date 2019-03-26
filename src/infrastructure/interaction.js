@@ -23,7 +23,7 @@ export default class Interaction {
     this.startX = extract(event, 'clientX')
     this.startY = extract(event, 'clientY')
 
-    this.startCoordinates = this.context.coordinates()
+    this.startCoordinates = this.context.getCoordinates()
   }
 
   move (event) {

@@ -26,7 +26,7 @@ export default class ThreeContext extends Context {
   constructor (browser) {
     super()
     this.browser = browser
-    this.geoCoor = new GeographicCoordinates({})
+    this.coordinates = new GeographicCoordinates({})
   }
 
   init (tour) {
@@ -43,12 +43,13 @@ export default class ThreeContext extends Context {
     this.browser.renderScene(this.renderer)
   }
 
-  coordinates () {
-    return this.geoCoor
+  // todo write as a property with its get and set
+  getCoordinates () {
+    return this.coordinates
   }
 
-  setCoordinates (geoCoor) {
-    this.geoCoor = geoCoor
+  setCoordinates (coordinates) {
+    this.coordinates = coordinates
   }
 
   resize () {
@@ -66,7 +67,7 @@ export default class ThreeContext extends Context {
   }
 
   update () {
-    const updatedCoordinates = this.geoCoor.move(CAMERA_MOVEMENT_SPEED, 0)
+    const updatedCoordinates = this.coordinates.move(CAMERA_MOVEMENT_SPEED, 0)
 
     // target MUST be updated this way, `camera.target = position` doesn't work
     const position = updatedCoordinates.position()
