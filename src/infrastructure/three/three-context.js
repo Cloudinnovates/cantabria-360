@@ -68,7 +68,7 @@ export default class ThreeContext extends Context {
   }
 
   update () {
-    const updatedCoordinates = this.geoCoor.moveLongitude(CAMERA_MOVEMENT_SPEED)
+    const updatedCoordinates = this.geoCoor.move(CAMERA_MOVEMENT_SPEED, 0)
 
     // target MUST be updated this way, `camera.target = position` doesn't work
     const position = updatedCoordinates.position()

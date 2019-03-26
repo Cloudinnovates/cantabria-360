@@ -23,7 +23,7 @@ export default class Interaction {
 
     const deltaX = (this.startX - clientX) * 0.1
     const deltaY = (clientY - this.startY) * 0.1
-    context.setCoordinates(this.startCoordinates.moveDelta(deltaX, deltaY))
+    context.setCoordinates(this.startCoordinates.move(deltaX, deltaY))
   }
 
   end (event, context) {
