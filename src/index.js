@@ -7,9 +7,9 @@ import Interaction from './infrastructure/interaction'
 
 let currentTour = firstTour
 
-const interaction = new Interaction()
 const browser = new Browser()
 const context = new ThreeContext(browser)
+const interaction = new Interaction(context)
 context.init()
 context.initTour(currentTour)
 
@@ -68,26 +68,22 @@ function onWindowResize () {
 }
 
 function onPointerStart (event) {
-  interaction.start(event, context)
+  interaction.start(event)
 }
 
 function onPointerMove (event) {
-  interaction.move(event, context)
+  interaction.move(event)
 }
 
 function onPointerUp (event) {
-  interaction.end(event, context)
+  interaction.end(event)
 }
 
 function onDocumentMouseWheel (event) {
   context.zoom(event.deltaY)
 }
 
-function update () {
-  context.update()
-}
-
 function animate () {
   requestAnimationFrame(animate)
-  update()
+  context.update()
 }

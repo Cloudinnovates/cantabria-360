@@ -1,33 +1,46 @@
-// TODO check event.touches is defined
-export default class Interaction {
-  constructor () {
-    this.interacting = false
+
+function extract (event, prop) {
+  if (event[prop]) {
+    return event[prop]
   }
 
-  start (event, context) {
+  if (!event.touches) {
+    return 0
+  }
+
+  return event.touches[0][prop]
+}
+
+export default class Interaction {
+  constructor (context) {
+    this.interacting = false
+    this.context = context
+  }
+
+  start (event) {
     this.interacting = true
 
-    this.startX = event.clientX || event.touches[0].clientX
-    this.startY = event.clientY || event.touches[0].clientY
+    this.startX = extract(event, 'clientX')
+    this.startY = extract(event, 'clientY')
 
-    this.startCoordinates = context.coordinates()
+    this.startCoordinates = this.context.coordinates()
   }
 
-  move (event, context) {
+  move (event) {
     if (!this.interacting) {
       return
     }
 
-    const clientX = event.clientX || event.touches[0].clientX
-    const clientY = event.clientY || event.touches[0].clientY
+    const clientX = extract(event, 'clientX')
+    const clientY = extract(event, 'clientY')
 
     const deltaX = (this.startX - clientX) * 0.1
     const deltaY = (clientY - this.startY) * 0.1
-    context.setCoordinates(this.startCoordinates.move(deltaX, deltaY))
+    this.context.setCoordinates(this.startCoordinates.move(deltaX, deltaY))
   }
 
-  end (event, context) {
+  end (event) {
     this.interacting = false
-    context.detectIntersections(event)
+    this.context.detectIntersections(event)
   }
 }
