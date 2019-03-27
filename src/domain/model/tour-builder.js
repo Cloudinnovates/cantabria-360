@@ -4,23 +4,30 @@ import GateModel from './gate-model'
 import TourModel from './tour-model'
 import Panorama from './panorama'
 
+function buildRoom (room) {
+  const id = room.id
+  const panorama = new Panorama(room.panorama)
+  return new RoomModel({ id, panorama })
+}
+
+function buildGate (gate, roomsById) {
+  const { id, label } = gate
+  const { x, y, z } = gate.position
+  const position = new Position(x, y, z)
+  const goesTo = roomsById[gate.goesTo]
+
+  return new GateModel({ id, label, position, goesTo })
+}
+
 export default class TourBuilder {
   static fromJSON (jsonTour) {
     const roomsById = jsonTour.rooms.reduce((byId, room) => {
-      const id = room.id
-      const panorama = new Panorama(room.panorama)
-      byId[room.id] = new RoomModel({ id, panorama })
-
+      byId[room.id] = buildRoom(room)
       return byId
     }, {})
 
     const gatesById = jsonTour.gates.reduce((byId, gate) => {
-      const { id, label } = gate
-      const goesTo = roomsById[gate.goesTo]
-      const { x, y, z } = gate.position
-      const position = new Position(x, y, z)
-      byId[gate.id] = new GateModel({ id, label, position, goesTo })
-
+      byId[gate.id] = buildGate(gate, roomsById)
       return byId
     }, {})
 
