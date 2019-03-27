@@ -1,0 +1,109 @@
+{
+  "id": "first-tour",
+  "description": "El primer tour virtual de <a href=\"https://www.mycantabria.com\">MyCantabria</a>",
+  "rooms": [
+    {
+      "id": "entrance",
+      "panorama": "assets/images/entrance.jpg",
+      "gates": [
+        "from-entrance-to-bedroom",
+        "from-entrance-to-kitchen",
+        "from-entrance-to-bathroom"
+      ]
+    },
+    {
+      "id": "bedroom",
+      "panorama": "assets/images/bedroom.jpg",
+      "gates": [
+        "from-bedroom-to-entrance"
+      ]
+    },
+    {
+      "id": "kitchen",
+      "panorama": "assets/images/kitchen.jpg",
+      "gates": [
+        "from-kitchen-to-entrance",
+        "from-kitchen-to-bathroom"
+      ]
+    },
+    {
+      "id": "bathroom",
+      "panorama": "assets/images/bathroom.jpg",
+      "gates": [
+        "from-bathroom-to-kitchen"
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "id": "from-entrance-to-bedroom",
+      "label": "Habitación",
+      "goesTo": "bedroom",
+      "position": {
+        "x": 100,
+        "y": 0,
+        "z": -300
+      }
+    },
+    {
+      "id": "from-entrance-to-kitchen",
+      "label": "Cocina",
+      "goesTo": "kitchen",
+      "position": {
+        "x": 300,
+        "y": 0,
+        "z": 0
+      }
+    },
+    {
+      "id": "from-entrance-to-bathroom",
+      "label": "Baño",
+      "goesTo": "bathroom",
+      "position": {
+        "x": 300,
+        "y": 0,
+        "z": -200
+      }
+    },
+    {
+      "id": "from-bedroom-to-entrance",
+      "label": "Entrada",
+      "goesTo": "entrance",
+      "position": {
+        "x": 250,
+        "y": 0,
+        "z": -300
+      }
+    },
+    {
+      "id": "from-kitchen-to-entrance",
+      "label": "Entrada",
+      "goesTo": "entrance",
+      "position": {
+        "x": -200,
+        "y": 0,
+        "z": 0
+      }
+    },
+    {
+      "id": "from-kitchen-to-bathroom",
+      "label": "Baño",
+      "goesTo": "bathroom",
+      "position": {
+        "x": 50,
+        "y": 0,
+        "z": -200
+      }
+    },
+    {
+      "id": "from-bathroom-to-kitchen",
+      "label": "Cocina",
+      "goesTo": "kitchen",
+      "position": {
+        "x": 200,
+        "y": 0,
+        "z": -300
+      }
+    }
+  ]
+}
