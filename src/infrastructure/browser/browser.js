@@ -24,4 +24,19 @@ export default class Browser {
   height () {
     return window.innerHeight
   }
+
+  tourId () {
+    const query = window.location.search.substring(1)
+    const params = query.split('&')
+    const pairs = params
+      .map(param => param.split('='))
+      .map(pair => {
+        return {
+          name: pair[0],
+          value: pair[1]
+        }
+      })
+    const tourPair = pairs.find(pair => pair.name === 'tour')
+    return tourPair && tourPair.value
+  }
 }
