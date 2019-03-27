@@ -1,9 +1,9 @@
-/* global requestAnimationFrame */
+/* global fetch, requestAnimationFrame */
 
-import { firstTour } from './data/tours'
 import ThreeContext from './infrastructure/three/three-context'
 import Browser from './infrastructure/browser/browser'
 import Interaction from './infrastructure/interaction'
+import TourBuilder from './domain/model/tour-builder'
 
 const browser = new Browser()
 const context = new ThreeContext(browser)
@@ -26,6 +26,16 @@ function animate () {
   context.update()
 }
 
-context.init(firstTour)
-configureEventListeners()
-animate()
+const tourId = browser.tourId()
+if (!tourId) {
+  const info = document.getElementById('info')
+  info.innerHTML = '<h1>No he podido encontrar un tour</h1>'
+} else {
+  fetch(`src/data/tour-${tourId}.json`)
+    .then(response => response.json())
+    .then(jsonTour => {
+      context.init(TourBuilder.fromJSON(jsonTour))
+      configureEventListeners()
+      animate()
+    })
+}
