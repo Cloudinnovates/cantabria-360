@@ -1,3 +1,5 @@
+/* global requestAnimationFrame */
+
 import { Math as ThreeMath, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three'
 import Context from '../../domain/graph/context'
 import PanoramaMesh from './meshes/panorama-mesh'
@@ -41,6 +43,13 @@ export default class ThreeContext extends Context {
 
     this.browser.setTourDescription(tour)
     this.browser.renderScene(this.renderer)
+
+    this.start()
+  }
+
+  start () {
+    requestAnimationFrame(this.start.bind(this))
+    this.update()
   }
 
   resize () {

@@ -1,9 +1,9 @@
-/* global fetch, requestAnimationFrame */
-
 import ThreeContext from './infrastructure/three/three-context'
 import Browser from './infrastructure/browser/browser'
 import Interaction from './infrastructure/interaction'
 import TourBuilder from './domain/model/tour-builder'
+import TourRepository from './infrastructure/tour-repository'
+import ShowError from './infrastructure/show-error'
 
 const browser = new Browser()
 const context = new ThreeContext(browser)
@@ -21,21 +21,13 @@ function configureEventListeners () {
   window.addEventListener('resize', context.resize.bind(context), false)
 }
 
-function animate () {
-  requestAnimationFrame(animate)
-  context.update()
-}
-
 const tourId = browser.tourId()
-if (!tourId) {
-  const info = document.getElementById('info')
-  info.innerHTML = '<h1>No he podido encontrar un tour</h1>'
-} else {
-  fetch(`src/data/tour-${tourId}.json`)
-    .then(response => response.json())
+if (tourId) {
+  TourRepository.find(tourId)
     .then(jsonTour => {
       context.init(TourBuilder.fromJSON(jsonTour))
       configureEventListeners()
-      animate()
     })
+} else {
+  ShowError.tourIdNotFound()
 }
