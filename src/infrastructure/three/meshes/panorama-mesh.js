@@ -12,6 +12,7 @@ export default class PanoramaMesh {
     // invert the geometry on the x-axis so that all of the faces point inward
     geometry.scale(-1, 1, 1)
 
+    // todo Is this load asynchronous? Can I wait for it to complete to render everythign?
     const texture = this.textureLoader.load(panorama.path)
     const material = new MeshBasicMaterial({ map: texture })
     const mesh = new Mesh(geometry, material)
