@@ -1,9 +1,9 @@
-/* global fetch, requestAnimationFrame */
-
 import ThreeContext from './infrastructure/three/three-context'
 import Browser from './infrastructure/browser/browser'
 import Interaction from './infrastructure/interaction'
 import TourBuilder from './domain/model/tour-builder'
+import TourRepository from './infrastructure/tour-repository'
+import ShowError from './infrastructure/show-error'
 
 const browser = new Browser()
 const context = new ThreeContext(browser)
