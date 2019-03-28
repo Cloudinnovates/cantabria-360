@@ -3,9 +3,9 @@
 import { Math as ThreeMath, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three'
 import Context from '../../domain/graph/context'
 import PanoramaMesh from './meshes/panorama-mesh'
-import GateMesh from './meshes/gate-mesh'
 import IntersectDetector from './intersect-detector'
 import GeographicCoordinates from '../../domain/graph/geographic-coordinates'
+import GateMeshBuilder from './meshes/gate-mesh-builder'
 
 const CAMERA_MOVEMENT_SPEED = 0
 const DEFAULT_FOV = 70
@@ -18,8 +18,7 @@ function createSceneFrom (room) {
   const panorama = new PanoramaMesh()
   panorama.create(scene, room.panorama)
 
-  const gateMesh = new GateMesh()
-  room.gates.forEach(gate => gateMesh.create(scene, gate))
+  room.gates.forEach(gate => GateMeshBuilder.circle(scene, gate))
 
   return scene
 }

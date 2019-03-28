@@ -11,3 +11,5 @@ Estudiar cómo se pueden mostrar fotos 360º en la web
 - [How to export 3js... on S.O.](https://stackoverflow.com/questions/29048161/how-to-export-a-three-js-scene-into-a-360-texture-for-photosphere)
 - [Photo spheres with 3js](http://blog.mastermaps.com/2014/01/photo-spheres-with-threejs.html)
 - [Muchos ejemplos básicos](http://stemkoski.github.io/Three.js/)
+- [Sprites que cargan PNGs con transparencias](https://github.com/mrdoob/three.js/blob/master/examples/webgl_points_sprites.html)
+- [Carga de SVGs](https://github.com/mrdoob/three.js/blob/master/examples/webgl_loader_svg.html)

@@ -58,7 +58,7 @@ function drawRoundedRectangle (ctx, x, y, w, h, r) {
   ctx.stroke()
 }
 
-export default class GateMesh {
+export default class CrateGateMesh {
   create (scene, gate) {
     const { x, y, z } = gate.position
     // square with some texture
