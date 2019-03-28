@@ -1,4 +1,13 @@
-import { Sprite, SpriteMaterial, Texture, TextureLoader } from 'three'
+import {Sprite, SpriteMaterial, Texture, TextureLoader} from 'three'
+
+function padCenter (text, length) {
+  const textLength = Math.min(text.length, length)
+  const start = parseInt((length - textLength) / 2)
+  return text
+    .substr(0, textLength - 1)
+    .padStart(start + textLength)
+    .padEnd(length)
+}
 
 function makeTextSprite (message, parameters = {
   fontface: 'Arial',
@@ -7,13 +16,15 @@ function makeTextSprite (message, parameters = {
   borderColor: { r: 0, g: 0, b: 0, a: 1.0 },
   backgroundColor: { r: 255, g: 255, b: 255, a: 1.0 }
 }) {
+  const paddedMessage = padCenter(message, 24)
+
   const { fontface, fontsize, borderThickness, borderColor, backgroundColor } = parameters
   const canvas = document.createElement('canvas')
   const context = canvas.getContext('2d')
   context.font = 'Bold ' + fontsize + 'px ' + fontface
 
   // get size data (height depends only on font size)
-  const textWidth = context.measureText(message).width
+  const textWidth = context.measureText(paddedMessage).width
 
   // background color
   context.fillStyle = toRGBA(backgroundColor)
@@ -26,7 +37,7 @@ function makeTextSprite (message, parameters = {
 
   // text color
   context.fillStyle = 'rgba(0, 0, 0, 1.0)'
-  context.fillText(message, borderThickness, fontsize + borderThickness)
+  context.fillText(paddedMessage, borderThickness, fontsize + borderThickness)
 
   // canvas contents will be used for a texture
   const texture = new Texture(canvas)
@@ -73,6 +84,7 @@ export default class CircleArrowGateMesh {
     // add some text
     const text = makeTextSprite(` ${gate.label} `)
     text.position.set(x, y, z)
+    text.center.set(0.275, 1.35)
     text.name = `text-${gate.id}`
 
     scene.add(sprite)
