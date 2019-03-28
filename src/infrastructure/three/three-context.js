@@ -18,7 +18,7 @@ function createSceneFrom (room) {
   const panorama = new PanoramaMesh()
   panorama.create(scene, room.panorama)
 
-  room.gates.forEach(gate => GateMeshBuilder.arrow(scene, gate))
+  room.gates.forEach(gate => GateMeshBuilder.circle(scene, gate))
 
   return scene
 }
