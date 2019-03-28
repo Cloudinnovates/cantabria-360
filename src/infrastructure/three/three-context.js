@@ -1,11 +1,11 @@
 /* global requestAnimationFrame */
 
-import {Math as ThreeMath, PerspectiveCamera, Scene, Vector3, WebGLRenderer} from 'three'
+import { Math as ThreeMath, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three'
 import Context from '../../domain/graph/context'
 import PanoramaMesh from './meshes/panorama-mesh'
 import IntersectDetector from './intersect-detector'
 import GeographicCoordinates from '../../domain/graph/geographic-coordinates'
-import GateMeshBuilder from "./meshes/gate-mesh-builder"
+import GateMeshBuilder from './meshes/gate-mesh-builder'
 
 const CAMERA_MOVEMENT_SPEED = 0
 const DEFAULT_FOV = 70
