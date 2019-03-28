@@ -1,8 +1,8 @@
-import RoomModel from './room-model'
-import Position from './position'
-import GateModel from './gate-model'
-import TourModel from './tour-model'
-import Panorama from './panorama'
+import RoomModel from '../model/room-model'
+import Position from '../model/position'
+import GateModel from '../model/gate-model'
+import TourModel from '../model/tour-model'
+import Panorama from '../model/panorama'
 
 function buildRoom (room) {
   const id = room.id
