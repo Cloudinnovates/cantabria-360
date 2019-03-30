@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>three.js webgl - equirectangular panorama</title>
+    <title>MyCantabria 360</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <style>
@@ -27,6 +27,24 @@
         a {
             color: #ffffff;
         }
+
+        #tooltip {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-family: Arial, sans-serif;
+            background-color: white;
+            border: black solid 2px;
+            padding: 0.25em;
+        }
+
+        .inactive {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -34,6 +52,7 @@
 <div id="container"></div>
 <div id="info"></div>
 <div id="show-error"></div>
+<spen id="tooltip" class="inactive"></spen>
 
 <script src="dist/bundle.js"></script>
 
