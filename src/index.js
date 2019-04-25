@@ -4,13 +4,13 @@ import MovementInteraction from './infrastructure/interactions/movement-interact
 import TourBuilder from './domain/builders/tour-builder'
 import TourRepository from './infrastructure/tour-repository'
 import ShowError from './infrastructure/show-error'
-import IntersectionInteraction from './infrastructure/interactions/intersection-interaction'
+import SwitchRoomsInteraction from './infrastructure/interactions/switch-rooms-interaction'
 import TooltipInteraction from './infrastructure/interactions/tooltip-interaction'
 
 const browser = new Browser()
 const context = new ThreeContext(browser)
 const mover = new MovementInteraction(context)
-const intersectioner = new IntersectionInteraction(context)
+const switcher = new SwitchRoomsInteraction(context)
 const tooltiper = new TooltipInteraction(context)
 
 function configureEventListeners () {
@@ -22,10 +22,10 @@ function configureEventListeners () {
   document.addEventListener('touchend', mover.end.bind(mover), false)
   document.addEventListener('wheel', context.zoom.bind(context), false)
 
-  document.addEventListener('mousedown', intersectioner.start.bind(intersectioner), false)
-  document.addEventListener('mouseup', intersectioner.end.bind(intersectioner), false)
-  document.addEventListener('touchstart', intersectioner.start.bind(intersectioner), false)
-  document.addEventListener('touchend', intersectioner.end.bind(intersectioner), false)
+  document.addEventListener('mousedown', switcher.start.bind(switcher), false)
+  document.addEventListener('mouseup', switcher.end.bind(switcher), false)
+  document.addEventListener('touchstart', switcher.start.bind(switcher), false)
+  document.addEventListener('touchend', switcher.end.bind(switcher), false)
 
   document.addEventListener('mousemove', tooltiper.move.bind(tooltiper), false)
 

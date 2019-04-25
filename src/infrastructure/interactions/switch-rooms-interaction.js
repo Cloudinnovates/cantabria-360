@@ -1,7 +1,7 @@
 /**
  * Interaction to launch the computation to detect interactions
  */
-export default class IntersectionInteraction {
+export default class SwitchRoomsInteraction {
   constructor (context) {
     this.context = context
   }
