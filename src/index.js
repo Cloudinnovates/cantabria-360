@@ -5,24 +5,13 @@ import TourBuilder from './domain/builders/tour-builder'
 import TourRepository from './infrastructure/tour-repository'
 import ShowError from './infrastructure/show-error'
 import IntersectionInteraction from './infrastructure/interactions/intersection-interaction'
+import TooltipInteraction from './infrastructure/interactions/tooltip-interaction'
 
 const browser = new Browser()
 const context = new ThreeContext(browser)
 const mover = new MovementInteraction(context)
 const intersectioner = new IntersectionInteraction(context)
-
-function tooltipInteraction (event) {
-  const tooltip = document.getElementById('tooltip')
-  tooltip.className = 'active'
-  tooltip.innerText = `x: ${event.clientX}, y: ${event.clientY}`
-  tooltip.style.top = (event.clientY + 20) + 'px'
-  tooltip.style.left = event.clientX + 'px'
-}
-
-function tooltipInteractionStop () {
-  const tooltip = document.getElementById('tooltip')
-  tooltip.className = 'inactive'
-}
+const tooltiper = new TooltipInteraction(context)
 
 function configureEventListeners () {
   document.addEventListener('mousedown', mover.start.bind(mover), false)
@@ -38,8 +27,7 @@ function configureEventListeners () {
   document.addEventListener('touchstart', intersectioner.start.bind(intersectioner), false)
   document.addEventListener('touchend', intersectioner.end.bind(intersectioner), false)
 
-  document.addEventListener('mousemove', tooltipInteraction, false)
-  document.addEventListener('mouseup', tooltipInteractionStop, false)
+  document.addEventListener('mousemove', tooltiper.move.bind(tooltiper), false)
 
   window.addEventListener('resize', context.resize.bind(context), false)
 }

@@ -9,6 +9,7 @@ export default class InteractionAdapter {
   }
 
   // todo Implement the three methods of the interface
+  // todo This is needed because clientX and clientY need to be extracted, and some properties (like `touches`) need to be checked, but they're not checked everywhere they're used)
   start (event) {}
   move (event) {}
   end (event) {}

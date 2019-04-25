@@ -3,16 +3,16 @@
  */
 export default class IntersectionInteraction {
   constructor (context) {
-    this.interacting = false
     this.context = context
   }
 
-  start (event) {
-    this.interacting = true
-  }
+  start (event) {}
+  move (event) {}
 
   end (event) {
-    this.interacting = false
-    this.context.detectIntersections(event)
+    const intersected = this.context.intersectedGate(event)
+    if (intersected) {
+      this.context.switchRooms(intersected)
+    }
   }
 }
