@@ -1,6 +1,6 @@
 import ThreeContext from './infrastructure/three/three-context'
 import Browser from './infrastructure/browser/browser'
-import Interaction from './infrastructure/interaction'
+import Interaction from './infrastructure/interactions/interaction'
 import TourBuilder from './domain/builders/tour-builder'
 import TourRepository from './infrastructure/tour-repository'
 import ShowError from './infrastructure/show-error'
