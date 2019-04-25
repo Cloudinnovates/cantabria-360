@@ -1,3 +1,5 @@
+const OFFSET = 10
+
 /**
  * Interaction to show a tooltip with information about the gate
  */
@@ -22,13 +24,18 @@ export default class TooltipInteraction {
   end (event) {}
 
   showTooltip (gate, event) {
+    document.body.style.cursor = 'pointer'
+
     this.$tooltip.className = 'active'
-    this.$tooltip.innerText = `x: ${event.clientX}, y: ${event.clientY}`
-    this.$tooltip.style.top = (event.clientY + 20) + 'px'
-    this.$tooltip.style.left = event.clientX + 'px'
+    this.$tooltip.innerText = gate.label
+    this.$tooltip.style.top = (event.clientY + OFFSET) + 'px'
+    this.$tooltip.style.left = (event.clientX + OFFSET) + 'px'
   }
 
   hideTooltip () {
+    document.body.style.cursor = 'default'
+
+    this.$tooltip.innerText = ''
     this.$tooltip.className = 'inactive'
   }
 }
