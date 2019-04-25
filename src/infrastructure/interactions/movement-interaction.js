@@ -11,7 +11,7 @@ function extract (event, prop) {
   return event.touches[0][prop]
 }
 
-export default class Interaction {
+export default class MovementInteraction {
   constructor (context) {
     this.interacting = false
     this.context = context
@@ -41,6 +41,5 @@ export default class Interaction {
 
   end (event) {
     this.interacting = false
-    this.context.detectIntersections(event)
   }
 }
