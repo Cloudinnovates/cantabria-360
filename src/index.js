@@ -1,11 +1,11 @@
 import ThreeContext from './infrastructure/three/three-context'
 import Browser from './infrastructure/browser/browser'
-import MovementInteraction from './infrastructure/interactions/movement-interaction'
+import MovementInteraction from './domain/interactions/movement-interaction'
 import TourBuilder from './domain/builders/tour-builder'
 import TourRepository from './infrastructure/tour-repository'
 import ShowError from './infrastructure/show-error'
-import SwitchRoomsInteraction from './infrastructure/interactions/switch-rooms-interaction'
-import TooltipInteraction from './infrastructure/interactions/tooltip-interaction'
+import SwitchRoomsInteraction from './domain/interactions/switch-rooms-interaction'
+import TooltipInteraction from './domain/interactions/tooltip-interaction'
 import InteractionAdapter from './infrastructure/interactions/interaction-adapter'
 
 const browser = new Browser()
