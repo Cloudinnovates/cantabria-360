@@ -6,10 +6,11 @@ import TourRepository from './infrastructure/tour-repository'
 import ShowError from './infrastructure/show-error'
 import SwitchRoomsInteraction from './infrastructure/interactions/switch-rooms-interaction'
 import TooltipInteraction from './infrastructure/interactions/tooltip-interaction'
+import InteractionAdapter from './infrastructure/interactions/interaction-adapter'
 
 const browser = new Browser()
 const context = new ThreeContext(browser)
-const mover = new MovementInteraction(context)
+const mover = new InteractionAdapter(new MovementInteraction(context))
 const switcher = new SwitchRoomsInteraction(context)
 const tooltiper = new TooltipInteraction(context)
 

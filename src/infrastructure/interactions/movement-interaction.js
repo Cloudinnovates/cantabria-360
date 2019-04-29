@@ -1,45 +1,28 @@
 
-function extract (event, prop) {
-  if (event[prop]) {
-    return event[prop]
-  }
-
-  if (!event.touches) {
-    return 0
-  }
-
-  return event.touches[0][prop]
-}
-
 export default class MovementInteraction {
   constructor (context) {
     this.interacting = false
     this.context = context
+    this.startPosition = null
   }
 
-  start (event) {
+  start (position) {
     this.interacting = true
-
-    this.startX = extract(event, 'clientX')
-    this.startY = extract(event, 'clientY')
-
+    this.startPosition = position
     this.startCoordinates = this.context.coordinates
   }
 
-  move (event) {
+  move (position) {
     if (!this.interacting) {
       return
     }
 
-    const clientX = extract(event, 'clientX')
-    const clientY = extract(event, 'clientY')
-
-    const deltaX = (this.startX - clientX) * 0.1
-    const deltaY = (clientY - this.startY) * 0.1
+    const deltaX = (this.startPosition.x - position.x) * 0.1
+    const deltaY = (position.y - this.startPosition.y) * 0.1
     this.context.coordinates = this.startCoordinates.move(deltaX, deltaY)
   }
 
-  end (event) {
+  end (position) {
     this.interacting = false
   }
 }
