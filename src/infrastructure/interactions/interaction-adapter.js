@@ -12,7 +12,7 @@ function extract (event, prop) {
   return event.touches[0][prop]
 }
 
-function buildPosition(event) {
+function buildPosition (event) {
   const x = extract(event, 'clientX')
   const y = extract(event, 'clientY')
   const z = 0

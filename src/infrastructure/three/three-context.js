@@ -79,9 +79,9 @@ export default class ThreeContext extends Context {
     this.coordinates = updatedCoordinates
   }
 
-  intersectedGate (event) {
+  intersectedGate (position) {
     const detector = new IntersectDetector(this.scene, this.camera)
-    return detector.gateModel(event)
+    return detector.gateModel(position)
   }
 
   switchRooms (throughGate) {

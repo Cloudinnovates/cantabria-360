@@ -11,9 +11,9 @@ export default class IntersectDetector {
     this.camera = camera
   }
 
-  gateModel (event) {
-    const mouseX = (event.clientX / window.innerWidth) * 2 - 1
-    const mouseY = -(event.clientY / window.innerHeight) * 2 + 1
+  gateModel (position) {
+    const mouseX = (position.x / window.innerWidth) * 2 - 1
+    const mouseY = -(position.y / window.innerHeight) * 2 + 1
 
     const vector = new Vector3(mouseX, mouseY, 1)
       .unproject(this.camera)

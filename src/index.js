@@ -11,8 +11,8 @@ import InteractionAdapter from './infrastructure/interactions/interaction-adapte
 const browser = new Browser()
 const context = new ThreeContext(browser)
 const mover = new InteractionAdapter(new MovementInteraction(context))
-const switcher = new SwitchRoomsInteraction(context)
-const tooltiper = new TooltipInteraction(context)
+const switcher = new InteractionAdapter(new SwitchRoomsInteraction(context))
+const tooltiper = new InteractionAdapter(new TooltipInteraction(context))
 
 function configureEventListeners () {
   document.addEventListener('mousedown', mover.start.bind(mover), false)

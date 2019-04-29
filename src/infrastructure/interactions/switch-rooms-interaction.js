@@ -6,11 +6,11 @@ export default class SwitchRoomsInteraction {
     this.context = context
   }
 
-  start (event) {}
-  move (event) {}
+  start (position) {}
+  move (position) {}
 
-  end (event) {
-    const intersected = this.context.intersectedGate(event)
+  end (position) {
+    const intersected = this.context.intersectedGate(position)
     if (intersected) {
       this.context.switchRooms(intersected)
     }

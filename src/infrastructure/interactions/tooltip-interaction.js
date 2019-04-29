@@ -9,27 +9,27 @@ export default class TooltipInteraction {
     this.$tooltip = document.getElementById('tooltip')
   }
 
-  start (event) {}
+  start (position) {}
 
-  move (event) {
-    const intersected = this.context.intersectedGate(event)
+  move (position) {
+    const intersected = this.context.intersectedGate(position)
     if (intersected) {
-      this.showTooltip(intersected, event)
+      this.showTooltip(intersected, position)
       return
     }
 
     this.hideTooltip()
   }
 
-  end (event) {}
+  end (position) {}
 
-  showTooltip (gate, event) {
+  showTooltip (gate, position) {
     document.body.style.cursor = 'pointer'
 
     this.$tooltip.className = 'active'
     this.$tooltip.innerText = gate.label
-    this.$tooltip.style.top = (event.clientY + OFFSET) + 'px'
-    this.$tooltip.style.left = (event.clientX + OFFSET) + 'px'
+    this.$tooltip.style.top = (position.y + OFFSET) + 'px'
+    this.$tooltip.style.left = (position.x + OFFSET) + 'px'
   }
 
   hideTooltip () {
