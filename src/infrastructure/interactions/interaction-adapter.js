@@ -1,16 +1,42 @@
+import Position from '../../domain/model/position'
+
+function extract (event, prop) {
+  if (event[prop]) {
+    return event[prop]
+  }
+
+  if (!event.touches) {
+    return 0
+  }
+
+  return event.touches[0][prop]
+}
+
+function buildPosition(event) {
+  const x = extract(event, 'clientX')
+  const y = extract(event, 'clientY')
+  const z = 0
+
+  return new Position(x, y, z)
+}
 /**
  * The idea is to adapt a browser event to a data class useful for Interactions so that
  * Interactions can be classes of the model, without external dependencies
  */
 export default class InteractionAdapter {
-  constructor (interaction, context) {
+  constructor (interaction) {
     this.interaction = interaction
-    this.context = context
   }
 
-  // todo Implement the three methods of the interface
-  // todo This is needed because clientX and clientY need to be extracted, and some properties (like `touches`) need to be checked, but they're not checked everywhere they're used)
-  start (event) {}
-  move (event) {}
-  end (event) {}
+  start (event) {
+    this.interaction.start(buildPosition(event))
+  }
+
+  move (event) {
+    this.interaction.move(buildPosition(event))
+  }
+
+  end (event) {
+    this.interaction.end(buildPosition(event))
+  }
 }
