@@ -1,4 +1,4 @@
-import {Sprite, SpriteMaterial, Texture, TextureLoader} from 'three'
+import { Sprite, SpriteMaterial, Texture, TextureLoader } from 'three'
 
 function padCenter (text, length) {
   const textLength = Math.min(text.length, length)
