@@ -1,26 +1,28 @@
 import { Mesh, MeshBasicMaterial, SphereBufferGeometry, TextureLoader } from 'three'
 
+function promisifyLoad (path) {
+  return new Promise(function (resolve, reject) {
+    const loader = new TextureLoader()
+    loader.load(path, texture => {
+      resolve(texture)
+    })
+  })
+}
 export default class PanoramaMesh {
-  constructor () {
-    this.textureLoader = new TextureLoader()
-    this.material = null
-  }
-
   create (scene, panorama) {
-    const geometry = new SphereBufferGeometry(500, 60, 40)
+    return promisifyLoad(panorama.path)
+      .then(texture => {
+        const material = new MeshBasicMaterial({ map: texture })
 
-    // invert the geometry on the x-axis so that all of the faces point inward
-    geometry.scale(-1, 1, 1)
+        // invert the geometry on the x-axis so that all of the faces point inward
+        const geometry = new SphereBufferGeometry(500, 60, 40)
+        geometry.scale(-1, 1, 1)
 
-    // todo Is this load asynchronous? Can I wait for it to complete to render everythign?
-    const texture = this.textureLoader.load(panorama.path)
-    const material = new MeshBasicMaterial({ map: texture })
-    const mesh = new Mesh(geometry, material)
-    mesh.name = 'panorama'
-    mesh.userData = this
+        const mesh = new Mesh(geometry, material)
+        mesh.name = 'panorama'
+        mesh.userData = this
 
-    this.material = material
-
-    scene.add(mesh)
+        scene.add(mesh)
+      })
   }
 }
