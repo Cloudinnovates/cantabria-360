@@ -1,6 +1,7 @@
 import CrateGateMesh from './crate-gate-mesh'
 import ArrowGateMesh from './arrow-gate-mesh'
 import CircleArrowGateMesh from './circle-arrow-gate-mesh'
+import JustCircleArrowGateMesh from './just-circle-arrow-gate-mesh'
 
 export default class GateMeshBuilder {
   static crate (scene, gate) {
@@ -13,5 +14,9 @@ export default class GateMeshBuilder {
 
   static circle (scene, gate) {
     return new CircleArrowGateMesh().create(scene, gate)
+  }
+
+  static justCircle (scene, gate) {
+    return new JustCircleArrowGateMesh().create(scene, gate)
   }
 }
