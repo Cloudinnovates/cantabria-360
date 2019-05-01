@@ -14,11 +14,14 @@ const MAXIMUM_FOV = 75
 
 function createSceneFrom (room) {
   const scene = new Scene()
-
   const panorama = new PanoramaMesh()
-  panorama.create(scene, room.panorama)
+
+  panorama.loadTexture(room.panorama.path)
+    .then(texture => {
+      panorama.create(scene, texture)
+    })
     .then(() => {
-      room.gates.forEach(gate => GateMeshBuilder.arrow(scene, gate))
+      return room.gates.forEach(gate => GateMeshBuilder.arrow(scene, gate))
     })
 
   return scene
