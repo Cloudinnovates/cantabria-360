@@ -42,12 +42,19 @@ export default class ThreeContext extends Context {
     this.renderer.setPixelRatio(this.browser.pixelRatio())
     this.renderer.setSize(this.browser.width(), this.browser.height())
 
-    this.scene = createSceneFrom(tour.startingRoom())
-
-    this.browser.setTourDescription(tour)
-    this.browser.renderScene(this.renderer)
-
-    this.start()
+    this.browser.showLoadingScene()
+      .then(() => {
+        return createSceneFrom(tour.startingRoom())
+      })
+      .then(scene => {
+        this.scene = scene
+        return scene
+      })
+      .then(() => {
+        this.browser.setTourDescription(tour)
+        this.browser.renderScene(this.renderer)
+        this.start()
+      })
   }
 
   start () {

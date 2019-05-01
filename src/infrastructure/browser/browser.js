@@ -1,11 +1,27 @@
 export default class Browser {
+  showLoadingScene () {
+    return new Promise((resolve, reject) => {
+      const container = document.getElementById('container')
+      container.className = 'inactive'
+
+      const loading = document.getElementById('loading')
+      loading.className = 'active'
+
+      resolve()
+    })
+  }
+
   setTourDescription (tour) {
     const info = document.getElementById('info')
     info.innerHTML = tour.description
   }
 
   renderScene (renderer) {
+    const loading = document.getElementById('loading')
+    loading.className = 'inactive'
+
     const container = document.getElementById('container')
+    container.className = 'active'
     container.appendChild(renderer.domElement)
   }
 
