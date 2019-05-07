@@ -2,6 +2,13 @@
 
 Estudiar cómo se pueden mostrar fotos 360º en la web
 
+# TODO
+
+- Tests unitarios
+- Webpack, que modifique el index.html para incluir el bundle.js y evitar caches y eso
+- Logo de MyCantabria en la parte baja de los panoramas
+- ¿se puede desplegar en el nginx junto con mps bplan?
+
 # Referencias
 
 - [three.js](https://threejs.org): librería para mostrar fotos 360º entre otras cosas
