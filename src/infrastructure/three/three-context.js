@@ -21,7 +21,7 @@ function createSceneFrom (room) {
       panorama.create(scene, texture)
     })
     .then(() => {
-      return room.gates.forEach(gate => GateMeshBuilder.arrow(scene, gate))
+      return room.gates.forEach(gate => GateMeshBuilder.justCircle(scene, gate))
     })
 
   return scene
