@@ -1,4 +1,4 @@
-import { Sprite, SpriteMaterial, TextureLoader  } from 'three'
+import { Sprite, SpriteMaterial, TextureLoader } from 'three'
 
 export default class CircleArrowGateMesh {
   create (scene, gate) {

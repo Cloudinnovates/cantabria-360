@@ -14,11 +14,15 @@ const MAXIMUM_FOV = 75
 
 function createSceneFrom (room) {
   const scene = new Scene()
-
   const panorama = new PanoramaMesh()
-  panorama.create(scene, room.panorama)
 
-  room.gates.forEach(gate => GateMeshBuilder.justCircle(scene, gate))
+  panorama.loadTexture(room.panorama.path)
+    .then(texture => {
+      panorama.create(scene, texture)
+    })
+    .then(() => {
+      return room.gates.forEach(gate => GateMeshBuilder.justCircle(scene, gate))
+    })
 
   return scene
 }
@@ -38,12 +42,19 @@ export default class ThreeContext extends Context {
     this.renderer.setPixelRatio(this.browser.pixelRatio())
     this.renderer.setSize(this.browser.width(), this.browser.height())
 
-    this.scene = createSceneFrom(tour.startingRoom())
-
-    this.browser.setTourDescription(tour)
-    this.browser.renderScene(this.renderer)
-
-    this.start()
+    this.browser.showLoadingScene()
+      .then(() => {
+        return createSceneFrom(tour.startingRoom())
+      })
+      .then(scene => {
+        this.scene = scene
+        return scene
+      })
+      .then(() => {
+        this.browser.setTourDescription(tour)
+        this.browser.renderScene(this.renderer)
+        this.start()
+      })
   }
 
   start () {
