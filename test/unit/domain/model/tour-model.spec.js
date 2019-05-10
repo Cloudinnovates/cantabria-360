@@ -1,15 +1,15 @@
 /* eslint-env jasmine */
 
-import TourModel from '../../../../src/domain/model/tour-model'
+import Tour from '../../../../src/domain/model/tour'
 
 function buildTour () {
   const id = 'tour-id'
   const description = 'tour-desc'
   const rooms = [ 'first-room-id', 2, 3.3 ]
-  return new TourModel({ id, description, rooms })
+  return new Tour({ id, description, rooms })
 }
 
-describe('TourModel', () => {
+describe('Tour', () => {
   it('can be created', () => {
     const tour = buildTour()
 

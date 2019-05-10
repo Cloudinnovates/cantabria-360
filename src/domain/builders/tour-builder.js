@@ -1,7 +1,7 @@
 import Room from '../model/room'
 import Position from '../model/position'
 import Gate from '../model/gate'
-import TourModel from '../model/tour-model'
+import Tour from '../model/tour'
 import Panorama from '../model/panorama'
 
 function buildRoom (room) {
@@ -39,6 +39,6 @@ export default class TourBuilder {
     })
 
     const { id, description } = jsonTour
-    return new TourModel({ id, description, rooms })
+    return new Tour({ id, description, rooms })
   }
 }
