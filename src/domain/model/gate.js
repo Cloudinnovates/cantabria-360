@@ -1,8 +1,8 @@
 import Position from './position'
 
-export default class GateModel {
+export default class Gate {
   static empty () {
-    return new GateModel({
+    return new Gate({
       id: 'no-gate-id',
       label: 'no-label',
       position: new Position(0, 0, 0),

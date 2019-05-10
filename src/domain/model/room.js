@@ -1,4 +1,4 @@
-export default class RoomModel {
+export default class Room {
   constructor ({ id, panorama }) {
     this.id = id
     this.panorama = panorama

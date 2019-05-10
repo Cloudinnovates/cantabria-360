@@ -1,13 +1,13 @@
-import RoomModel from '../model/room-model'
+import Room from '../model/room'
 import Position from '../model/position'
-import GateModel from '../model/gate-model'
-import TourModel from '../model/tour-model'
+import Gate from '../model/gate'
+import Tour from '../model/tour'
 import Panorama from '../model/panorama'
 
 function buildRoom (room) {
   const id = room.id
   const panorama = new Panorama(room.panorama)
-  return new RoomModel({ id, panorama })
+  return new Room({ id, panorama })
 }
 
 function buildGate (gate, roomsById) {
@@ -16,7 +16,7 @@ function buildGate (gate, roomsById) {
   const position = new Position(x, y, z)
   const goesTo = roomsById[gate.goesTo]
 
-  return new GateModel({ id, label, position, goesTo })
+  return new Gate({ id, label, position, goesTo })
 }
 
 export default class TourBuilder {
@@ -39,6 +39,6 @@ export default class TourBuilder {
     })
 
     const { id, description } = jsonTour
-    return new TourModel({ id, description, rooms })
+    return new Tour({ id, description, rooms })
   }
 }
