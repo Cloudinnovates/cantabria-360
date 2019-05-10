@@ -1,4 +1,4 @@
-import RoomModel from '../model/room-model'
+import Room from '../model/room'
 import Position from '../model/position'
 import Gate from '../model/gate'
 import TourModel from '../model/tour-model'
@@ -7,7 +7,7 @@ import Panorama from '../model/panorama'
 function buildRoom (room) {
   const id = room.id
   const panorama = new Panorama(room.panorama)
-  return new RoomModel({ id, panorama })
+  return new Room({ id, panorama })
 }
 
 function buildGate (gate, roomsById) {
