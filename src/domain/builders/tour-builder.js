@@ -1,6 +1,6 @@
 import RoomModel from '../model/room-model'
 import Position from '../model/position'
-import GateModel from '../model/gate-model'
+import Gate from '../model/gate'
 import TourModel from '../model/tour-model'
 import Panorama from '../model/panorama'
 
@@ -16,7 +16,7 @@ function buildGate (gate, roomsById) {
   const position = new Position(x, y, z)
   const goesTo = roomsById[gate.goesTo]
 
-  return new GateModel({ id, label, position, goesTo })
+  return new Gate({ id, label, position, goesTo })
 }
 
 export default class TourBuilder {
