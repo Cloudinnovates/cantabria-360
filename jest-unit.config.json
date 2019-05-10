@@ -1,0 +1,13 @@
+{
+  "verbose": true,
+  "testEnvironment": "node",
+  "setupFiles": [
+    "./test/helpers/bootstrap.js"
+  ],
+  "collectCoverage": true,
+  "coverageDirectory": "logs/coverage",
+  "coveragePathIgnorePatterns": [
+    "/node_modules/",
+    "/test/helpers/"
+  ]
+}
