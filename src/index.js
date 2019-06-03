@@ -7,12 +7,13 @@ import ShowError from './infrastructure/show-error'
 import SwitchRoomsInteraction from './domain/interactions/switch-rooms-interaction'
 import TooltipInteraction from './domain/interactions/tooltip-interaction'
 import InteractionAdapter from './infrastructure/interactions/interaction-adapter'
+import TooltipElement from './infrastructure/browser/tooltip-element'
 
 const browser = new Browser()
 const context = new ThreeContext(browser)
 const mover = new InteractionAdapter(new MovementInteraction(context))
 const switcher = new InteractionAdapter(new SwitchRoomsInteraction(context))
-const tooltiper = new InteractionAdapter(new TooltipInteraction(context))
+const tooltiper = new InteractionAdapter(new TooltipInteraction(context, new TooltipElement('tooltip')))
 
 function configureEventListeners () {
   document.addEventListener('mousedown', mover.start.bind(mover), false)

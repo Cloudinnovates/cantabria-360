@@ -1,12 +1,10 @@
-const OFFSET = 10
-
 /**
  * Interaction to show a tooltip with information about the gate
  */
 export default class TooltipInteraction {
-  constructor (context) {
+  constructor (context, $tooltip) {
     this.context = context
-    this.$tooltip = document.getElementById('tooltip')
+    this.$tooltip = $tooltip
   }
 
   start (position) {}
@@ -14,28 +12,12 @@ export default class TooltipInteraction {
   move (position) {
     const intersected = this.context.intersectedGate(position)
     if (intersected) {
-      this.showTooltip(intersected, position)
+      this.$tooltip.show(intersected.label, position)
       return
     }
 
-    this.hideTooltip()
+    this.$tooltip.hide()
   }
 
   end (position) {}
-
-  showTooltip (gate, position) {
-    document.body.style.cursor = 'pointer'
-
-    this.$tooltip.className = 'active'
-    this.$tooltip.innerText = gate.label
-    this.$tooltip.style.top = (position.y + OFFSET) + 'px'
-    this.$tooltip.style.left = (position.x + OFFSET) + 'px'
-  }
-
-  hideTooltip () {
-    document.body.style.cursor = 'default'
-
-    this.$tooltip.innerText = ''
-    this.$tooltip.className = 'inactive'
-  }
 }
