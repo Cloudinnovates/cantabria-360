@@ -36,4 +36,14 @@ describe('SwitchRoomsInteraction', () => {
       expect(context.switchRooms).toHaveBeenCalledWith(intersected)
     })
   })
+
+  describe('unused methods', () => {
+    it('#start', () => {
+      interaction.start()
+    })
+
+    it('#move', () => {
+      interaction.move()
+    })
+  })
 })

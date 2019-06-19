@@ -37,4 +37,14 @@ describe('TooltipInteraction', () => {
       expect($tooltip.hide).toHaveBeenCalled()
     })
   })
+
+  describe('unused methods', () => {
+    it('#start', () => {
+      interaction.start()
+    })
+
+    it('#end', () => {
+      interaction.end()
+    })
+  })
 })
