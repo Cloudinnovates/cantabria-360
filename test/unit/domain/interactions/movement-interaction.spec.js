@@ -1,8 +1,8 @@
 /* eslint-env jasmine */
 
 import MovementInteraction from '../../../../src/domain/interactions/movement-interaction'
-import Position from "../../../../src/domain/model/position"
-import GeographicCoordinates from "../../../../src/domain/graph/geographic-coordinates"
+import Position from '../../../../src/domain/model/position'
+import GeographicCoordinates from '../../../../src/domain/graph/geographic-coordinates'
 
 describe('MovementInteraction', () => {
   let startPosition, endPosition, coordinates, context, interaction
