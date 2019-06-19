@@ -1,7 +1,7 @@
 /* eslint-env jasmine */
 
 import GeographicCoordinates from '../../../../src/domain/graph/geographic-coordinates'
-import Position from "../../../../src/domain/model/position"
+import Position from '../../../../src/domain/model/position'
 
 describe('GeographicCoordinates', () => {
   let coordinates
