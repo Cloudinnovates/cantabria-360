@@ -2,8 +2,8 @@
 
 - [ ] Tests unitarios para las clases de dominio
     - [x] model
-    - [ ] interactions
-    - [ ] graph
+    - [x] interactions
+    - [x] graph
     - [ ] builders?
 - [ ] Tests unitarios para algunas clases de la infrastructura
 - [ ] Webpack, que modifique el index.html para incluir el bundle.js y evitar caches y eso
