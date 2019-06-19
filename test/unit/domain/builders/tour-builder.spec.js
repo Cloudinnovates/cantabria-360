@@ -4,11 +4,16 @@ import TourBuilder from '../../../../src/domain/builders/tour-builder'
 
 describe('GeographicCoordinates', () => {
   describe('#fromJSON', () => {
-    const definition = {
-      id: 'irrelevant id',
-      description: 'irrelevant descriptions',
-      rooms: []
-    }
+    let definition
+
+    beforeEach(() => {
+      definition = {
+        id: 'irrelevant id',
+        description: 'irrelevant descriptions',
+        rooms: [],
+        gates: []
+      }
+    })
 
     it('copies id from definition', () => {
       const tour = TourBuilder.fromJSON(definition)
@@ -23,6 +28,12 @@ describe('GeographicCoordinates', () => {
     it('builds tour without rooms', () => {
       const tour = TourBuilder.fromJSON(definition)
       expect(tour.rooms.length).toEqual(0)
+    })
+
+    it('builds one room without gates', () => {
+      definition.rooms = [ 1 ]
+      const tour = TourBuilder.fromJSON(definition)
+      expect(tour.rooms.length).toEqual(1)
     })
   })
 })
