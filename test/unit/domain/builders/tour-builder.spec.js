@@ -43,5 +43,11 @@ describe('GeographicCoordinates', () => {
       const tour = TourBuilder.fromJSON(definition)
       expect(tour.rooms.length).toEqual(1)
     })
+
+    it('builds several rooms without gates', () => {
+      definition.rooms = [ jsonRoom(), jsonRoom(), jsonRoom() ]
+      const tour = TourBuilder.fromJSON(definition)
+      expect(tour.rooms.length).toEqual(3)
+    })
   })
 })
