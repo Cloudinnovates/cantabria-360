@@ -2,6 +2,14 @@
 
 import TourBuilder from '../../../../src/domain/builders/tour-builder'
 
+function jsonRoom () {
+  return {
+    id: 'irrelevant-room-id',
+    panorama: 'irrelevant-panorama-url',
+    gates: []
+  }
+}
+
 describe('GeographicCoordinates', () => {
   describe('#fromJSON', () => {
     let definition
@@ -31,7 +39,7 @@ describe('GeographicCoordinates', () => {
     })
 
     it('builds one room without gates', () => {
-      definition.rooms = [ 1 ]
+      definition.rooms = [ jsonRoom() ]
       const tour = TourBuilder.fromJSON(definition)
       expect(tour.rooms.length).toEqual(1)
     })
